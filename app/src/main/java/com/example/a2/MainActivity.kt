@@ -33,5 +33,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        println("abcabc")
+
     }
 }
