@@ -2,6 +2,7 @@ package com.example.a2
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -10,18 +11,32 @@ import androidx.core.view.WindowInsetsCompat
 @SuppressLint("UseSwitchCompatOrMaterialCode")
 class MainActivity : AppCompatActivity() {
 
+    private var pauseTime: Long = 0
+    private var resumeTime: Long = 0
+    private var isPaused: Boolean = false
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+    }
+
+    override fun onPause() {
+        super.onPause()
+        pauseTime = System.currentTimeMillis()
+        isPaused = true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isPaused){
+            resumeTime = System.currentTimeMillis()
+
+            val seconds = (resumeTime - pauseTime) / 1000
+
+            Toast.makeText(this, "Приложение было свернуто на $seconds секунд", Toast.LENGTH_SHORT).show()
+
+            isPaused = false
         }
-
-        println("abcabc")
-        println("sdfghjklmjhgfd")
-
     }
 }
