@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
             val seconds = (resumeTime - pauseTime) / 1000
 
-            Toast.makeText(this, "Приложение было свернуто на $seconds секунд", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Приложение было свернуто на $seconds секунд", Toast.LENGTH_LONG).show()
 
             isPaused = false
         }
