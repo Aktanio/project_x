@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
 
     private var pauseTime: Long = 0
-    private var resumeTime: Long = 0
     private var isPaused: Boolean = false
 
     @SuppressLint("MissingInflatedId")
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (isPaused){
-            resumeTime = System.currentTimeMillis()
+            val resumeTime = System.currentTimeMillis()
 
             val seconds = (resumeTime - pauseTime) / 1000
 
