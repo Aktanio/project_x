@@ -4,15 +4,12 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 
 @SuppressLint("UseSwitchCompatOrMaterialCode")
 class MainActivity : AppCompatActivity() {
 
     private var pauseTime: Long = 0
-    private var resumeTime: Long = 0
     private var isPaused: Boolean = false
 
     @SuppressLint("MissingInflatedId")
@@ -30,11 +27,11 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (isPaused){
-            resumeTime = System.currentTimeMillis()
+            val resumeTime = System.currentTimeMillis()
 
             val seconds = (resumeTime - pauseTime) / 1000
 
-            Toast.makeText(this, "Приложение было свернуто на $seconds секунд", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Приложение было свернуто на $seconds секунд", Toast.LENGTH_SHORT).show()
 
             isPaused = false
         }
