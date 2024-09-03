@@ -9,7 +9,7 @@
 
     <EditText
         android:id="@+id/countryName"
-        android:layout_width="280dp"
+        android:layout_width="230dp"
         android:layout_height="50dp"
         android:hint="Name"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Button"
+        android:text="Список стран"
         android:textAllCaps="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/countryName"

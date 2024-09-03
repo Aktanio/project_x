@@ -1,7 +1,10 @@
 package com.example.a2
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
@@ -16,6 +19,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val countryName = findViewById<EditText>(R.id.countryName)
+        val searchButton = findViewById<Button>(R.id.searchButton)
+
+        searchButton.setOnClickListener {
+            val countryToast = countryName.text.toString()
+            val intent = Intent(this, CountriesListActivity::class.java)
+            intent.putExtra("countryName", countryToast)
+            startActivity(intent)
+        }
     }
 
     override fun onPause() {
