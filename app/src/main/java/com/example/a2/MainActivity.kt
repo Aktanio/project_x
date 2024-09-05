@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private var isPaused: Boolean = false
 
     companion object {
-        const val COUNTRY_NAME = "com.example.a2.MainActivity"
+        const val COUNTRY_NAME = "COUNTRY_NAME"
     }
 
     @SuppressLint("MissingInflatedId")
