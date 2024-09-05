@@ -15,6 +15,10 @@ class MainActivity : AppCompatActivity() {
     private var pauseTime: Long = 0
     private var isPaused: Boolean = false
 
+    companion object {
+        const val COUNTRY_NAME = "com.example.a2.MainActivity"
+    }
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         searchButton.setOnClickListener {
             val countryToast = countryName.text.toString()
             val intent = Intent(this, CountriesListActivity::class.java)
-            intent.putExtra("countryName", countryToast)
+            intent.putExtra(COUNTRY_NAME, countryToast)
             startActivity(intent)
         }
     }
