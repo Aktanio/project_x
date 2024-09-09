@@ -13,9 +13,9 @@ class CountriesListActivity : AppCompatActivity() {
         bindingListActivity = ActivityCountriesListBinding.inflate(layoutInflater)
         setContentView(bindingListActivity.root)
 
-        val toast = intent.getStringExtra(COUNTRY_NAME)
-        if (!toast.isNullOrEmpty()){
-            Toast.makeText(this, toast, Toast.LENGTH_LONG).show()
+        val toastText = intent.getStringExtra(COUNTRY_NAME)
+        if (!toastText.isNullOrEmpty()){
+            Toast.makeText(this, toastText, Toast.LENGTH_LONG).show()
         }
     }
 }
