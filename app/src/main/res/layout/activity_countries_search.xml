@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CountriesSearchActivity">
+
+    <EditText
+        android:id="@+id/countryName"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:hint="@string/country_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="13dp"/>
+
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/search_Button"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/countryName"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/countryImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/countryName"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/country"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="120dp"
+        android:text="@string/country"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/countryImage"
+        app:layout_constraintTop_toBottomOf="@+id/countryName" />
+
+    <TextView
+        android:id="@+id/capitalOfTheCountry"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/capital_of_the_country"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/countryImage"
+        app:layout_constraintTop_toBottomOf="@+id/country" />
+
+    <TextView
+        android:id="@+id/capitalName"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/capital_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="81dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toEndOf="@+id/capitalOfTheCountry"
+        app:layout_constraintTop_toTopOf="@+id/capitalOfTheCountry" />
+
+    <TextView
+        android:id="@+id/populationOfTheCountry"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="18dp"
+        android:text="@string/population_of_the_country"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/countryImage" />
+
+    <TextView
+        android:id="@+id/population"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="210dp"
+        android:text="@string/population"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/populationOfTheCountry"
+        app:layout_constraintTop_toBottomOf="@+id/countryImage" />
+
+    <TextView
+        android:id="@+id/areaOfTheCountry"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="18dp"
+        android:text="@string/area_of_the_country"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/populationOfTheCountry" />
+
+    <TextView
+        android:id="@+id/languagesOfTheCountry"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="18dp"
+        android:text="@string/language_of_the_country"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/areaOfTheCountry" />
+
+    <TextView
+        android:id="@+id/area"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="230dp"
+        android:text="@string/area"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/areaOfTheCountry"
+        app:layout_constraintTop_toBottomOf="@+id/population" />
+
+    <TextView
+        android:id="@+id/languages"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/languages"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="280dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/languagesOfTheCountry"
+        app:layout_constraintTop_toBottomOf="@+id/area" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
