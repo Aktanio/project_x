@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.example.a2.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
@@ -20,8 +19,17 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val controller = findNavController()
-        bindingFragment.searchCountry.setOnClickListener {controller.navigate(R.id.countriesSearchFragment)}
-        bindingFragment.listCountry.setOnClickListener {controller.navigate(R.id.countriesListFragment)}
+        bindingFragment.searchCountry.setOnClickListener {
+            openChildFragment(CountriesSearchFragment())
+        }
+        bindingFragment.listCountry.setOnClickListener {
+            openChildFragment(CountriesListFragment())
+        }
+    }
+    private fun openChildFragment(childFragment: Fragment){
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.childFragmentContainer, childFragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
