@@ -27,7 +27,7 @@ class MainFragment : Fragment() {
         }
     }
     private fun openChildFragment(childFragment: Fragment){
-        parentFragmentManager.beginTransaction()
+        childFragmentManager.beginTransaction()
             .replace(R.id.childFragmentContainer, childFragment)
             .addToBackStack(null)
             .commit()
