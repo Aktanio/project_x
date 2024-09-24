@@ -1,11 +1,10 @@
 package com.example.a2
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.a2.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
@@ -21,12 +20,16 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         bindingFragment.searchCountry.setOnClickListener {
-            val intentSearchActivity = Intent(activity, CountriesSearchActivity::class.java)
-            startActivity(intentSearchActivity)
+            openChildFragment(CountriesSearchFragment())
         }
         bindingFragment.listCountry.setOnClickListener {
-            val intentListActivity = Intent(activity, CountriesListActivity::class.java)
-            startActivity(intentListActivity)
+            openChildFragment(CountriesListFragment())
         }
+    }
+    private fun openChildFragment(childFragment: Fragment){
+        childFragmentManager.beginTransaction()
+            .replace(R.id.childFragmentContainer, childFragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
