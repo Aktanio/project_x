@@ -26,7 +26,7 @@ class CountriesListFragment : Fragment() {
         setFragmentResultListener(KEY_FOR_FRAGMENT){key, bundle->
             val toastText = bundle.getString(COUNTRY_NAME)
             if (!toastText.isNullOrEmpty()){
-                Toast.makeText(context, toastText, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Столица: $toastText", Toast.LENGTH_LONG).show()
             }
         }
         bindingFragmentList.backToMainFragment.setOnClickListener {
