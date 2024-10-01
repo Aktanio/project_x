@@ -1,7 +1,6 @@
 package com.example.a2
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,7 @@ class CountriesSearchFragment : Fragment() {
     private lateinit var bindingFragmentSearch: FragmentCountriesSearchBinding
 
     companion object{
-        const val COUNTRY_NAME = "COUNTRY_NAME"
+        const val CAPITAL_OF_THE_COUNTRY = "CAPITAL_OF_THE_COUNTRY"
         const val KEY_FOR_FRAGMENT = "KEY_FOR_FRAGMENT"
     }
 
@@ -31,31 +30,32 @@ class CountriesSearchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        bindingFragmentSearch.backToMainFragmentFromSearch.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
         bindingFragmentSearch.searchButton.setOnClickListener {
             val countryToast = bindingFragmentSearch.countryName.text.toString()
             if (countryToast.isNotEmpty()){
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
-                        val responce = RetrofitClient.countriesAPI.getCountryByName(countryToast)
-                        val capital = responce[0].capital?.joinToString(", ")
+                        val response = RetrofitClient.countriesAPI.getCountryByName(countryToast)
+                        val capital = response[0].capital?.joinToString(", ")
 
                         withContext(Dispatchers.Main){
-                            val capitalToast = Bundle().apply {
-                                putString(COUNTRY_NAME, capital)
+                            val capitalBundle = Bundle().apply {
+                                putString(CAPITAL_OF_THE_COUNTRY, capital)
                             }
-                            setFragmentResult(KEY_FOR_FRAGMENT, capitalToast)
+                            setFragmentResult(KEY_FOR_FRAGMENT, capitalBundle)
 
                             parentFragmentManager.beginTransaction()
                                 .replace(R.id.childFragmentContainer, CountriesListFragment())
                                 .addToBackStack(null)
                                 .commit()
-
-                            bindingFragmentSearch.backToMainFragmentFromSearch.setOnClickListener {
-                                parentFragmentManager.popBackStack()
-                            }
                         }
                     } catch (e: Exception){
-                        Toast.makeText(context, "Ошибка: $e", Toast.LENGTH_SHORT).show()
+                        withContext(Dispatchers.Main){
+                            Toast.makeText(context, "Ошибка: $e", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }else{

@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import com.example.a2.databinding.FragmentCountryDetailsBinding
 
 class CountryDetailsFragment : Fragment() {
-    private lateinit var bindingFragmentDerails: FragmentCountryDetailsBinding
+    private lateinit var bindingFragmentDetails: FragmentCountryDetailsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bindingFragmentDerails = FragmentCountryDetailsBinding.inflate(inflater, container, false)
-        return bindingFragmentDerails.root
+        bindingFragmentDetails = FragmentCountryDetailsBinding.inflate(inflater, container, false)
+        return bindingFragmentDetails.root
     }
 
 }
