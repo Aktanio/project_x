@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
-import com.example.a2.CountriesSearchFragment.Companion.COUNTRY_NAME
+import com.example.a2.CountriesSearchFragment.Companion.CAPITAL_OF_THE_COUNTRY
 import com.example.a2.CountriesSearchFragment.Companion.KEY_FOR_FRAGMENT
 import com.example.a2.databinding.FragmentCountriesListBinding
 
@@ -24,9 +24,9 @@ class CountriesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setFragmentResultListener(KEY_FOR_FRAGMENT){key, bundle->
-            val toastText = bundle.getString(COUNTRY_NAME)
+            val toastText = bundle.getString(CAPITAL_OF_THE_COUNTRY)
             if (!toastText.isNullOrEmpty()){
-                Toast.makeText(context, toastText, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Столица: $toastText", Toast.LENGTH_LONG).show()
             }
         }
         bindingFragmentList.backToMainFragment.setOnClickListener {

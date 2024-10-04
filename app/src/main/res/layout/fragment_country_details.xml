@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CountryDetailsFragment">
+
+    <ImageView
+        android:id="@+id/countryFlag"
+        android:layout_width="250dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginStart="11dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/factsAboutCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="13dp"
+        android:text="@string/fact_about_country"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/countryFlag" />
+
+    <TextView
+        android:id="@+id/facts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fact"
+        android:layout_marginTop="13dp"
+        android:textSize="15sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@+id/factsAboutCountry"
+        app:layout_constraintTop_toBottomOf="@+id/countryFlag" />
+
+    <TextView
+        android:id="@+id/foodCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="13dp"
+        android:text="@string/country_food"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/factsAboutCountry" />
+
+    <TextView
+        android:id="@+id/food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/food"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="5dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/foodCountry"
+        app:layout_constraintTop_toBottomOf="@+id/facts" />
+</androidx.constraintlayout.widget.ConstraintLayout>
