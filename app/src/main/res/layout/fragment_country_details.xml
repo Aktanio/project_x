@@ -4,60 +4,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CountryDetailsFragment">
+    tools:context=".CountryDetailsFragment"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/backToMainFragment"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="13dp"
+        android:src="@drawable/baseline_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/countryFlag"
         android:layout_width="250dp"
         android:layout_height="170dp"
+        android:layout_marginStart="13dp"
         android:layout_marginTop="11dp"
-        android:layout_marginStart="11dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/backToMainFragment"/>
 
     <TextView
-        android:id="@+id/factsAboutCountry"
+        android:id="@+id/countrySubregion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
+        android:layout_marginStart="13dp"
         android:layout_marginTop="13dp"
-        android:text="@string/fact_about_country"
+        android:text="@string/subregion_of_the_country"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/countryFlag" />
 
     <TextView
-        android:id="@+id/facts"
+        android:id="@+id/subregion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fact"
+        android:text="@string/subregion"
         android:layout_marginTop="13dp"
         android:textSize="15sp"
         android:layout_marginStart="5dp"
-        app:layout_constraintStart_toEndOf="@+id/factsAboutCountry"
+        app:layout_constraintStart_toEndOf="@+id/countrySubregion"
         app:layout_constraintTop_toBottomOf="@+id/countryFlag" />
 
     <TextView
-        android:id="@+id/foodCountry"
+        android:id="@+id/countryCurrencies"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
+        android:layout_marginStart="13dp"
         android:layout_marginTop="13dp"
-        android:text="@string/country_food"
+        android:text="@string/currencies_of_the_country"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/factsAboutCountry" />
+        app:layout_constraintTop_toBottomOf="@+id/countrySubregion" />
 
     <TextView
-        android:id="@+id/food"
+        android:id="@+id/currencies"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/food"
+        android:text="@string/currencies"
         android:layout_marginTop="13dp"
         android:layout_marginStart="5dp"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/foodCountry"
-        app:layout_constraintTop_toBottomOf="@+id/facts" />
+        app:layout_constraintStart_toEndOf="@+id/countryCurrencies"
+        app:layout_constraintTop_toBottomOf="@+id/subregion" />
 </androidx.constraintlayout.widget.ConstraintLayout>

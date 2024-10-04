@@ -15,8 +15,8 @@
     <string name="search_country">Поиск стран</string>
     <string name="list_country">Список стран</string>
     <string name="country_name">Name</string>
-    <string name="fact_about_country">Интересный факт:</string>
-    <string name="fact">TextView</string>
-    <string name="country_food">Кухня:</string>
-    <string name="food">TextView</string>
+    <string name="subregion_of_the_country">Субрегион:</string>
+    <string name="subregion">TextView</string>
+    <string name="currencies_of_the_country">Валюта:</string>
+    <string name="currencies">TextView</string>
 </resources>
