@@ -28,18 +28,17 @@ class CountriesListFragment : Fragment() {
         bindingFragmentList.backToMainFragment.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             try {
-                val countries = RetrofitClient.countriesAPI.getAllCountry()
+                val countries = withContext(Dispatchers.IO){
+                    RetrofitClient.countriesAPI.getAllCountry()
+                }
 
-                withContext(Dispatchers.Main){
-                    bindingFragmentList.forAllCountry.adapter = CountryAdapter(countries)
-                    bindingFragmentList.forAllCountry.layoutManager = LinearLayoutManager(context)
-                }
+                bindingFragmentList.forAllCountry.adapter = CountryAdapter(countries)
+                bindingFragmentList.forAllCountry.layoutManager = LinearLayoutManager(context)
+
             } catch (e: Exception){
-                withContext(Dispatchers.Main){
                     Toast.makeText(context, "Ошибка: $e", Toast.LENGTH_SHORT).show()
-                }
             }
         }
     }
