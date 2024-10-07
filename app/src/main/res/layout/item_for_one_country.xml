@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="10dp"
+        app:cardCornerRadius="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/ivory">
+
+        <ImageView
+            android:id="@+id/forCountryFlag"
+            android:layout_width="220dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="25dp"/>
+
+        <TextView
+            android:id="@+id/name_of_the_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/name_of_the_country"
+            android:layout_marginTop="180dp"
+            android:layout_marginStart="13dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/theCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/the_country"
+            android:layout_marginTop="180dp"
+            android:layout_marginStart="140dp"/>
+
+        <TextView
+            android:id="@+id/capital_of_the_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/capital_of_the_country"
+            android:layout_marginTop="208dp"
+            android:layout_marginStart="13dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/theCapital"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/capital_name"
+            android:layout_marginTop="208dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginBottom="8dp"/>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

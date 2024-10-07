@@ -19,4 +19,6 @@
     <string name="subregion">TextView</string>
     <string name="currencies_of_the_country">Валюта:</string>
     <string name="currencies">TextView</string>
+    <string name="name_of_the_country">Название страны:</string>
+    <string name="the_country">TextView</string>
 </resources>
