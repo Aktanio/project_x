@@ -12,15 +12,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
 
 class CountriesSearchFragment : Fragment() {
     private lateinit var bindingFragmentSearch: FragmentCountriesSearchBinding
 
     companion object{
-        const val CAPITAL_OF_THE_COUNTRY = "CAPITAL_OF_THE_COUNTRY"
-        const val FLAG = "FLAG_OF_THE_COUNTRY"
-        const val CURRENCIES = "CURRENCIES_OF_THE_COUNTRY"
-        const val SUBREGION = "SUBREGION_OF_THE_COUNTRY"
+        const val COUNTRY_DATA = "COUNTRY_DATA"
         const val KEY_FOR_FRAGMENT = "KEY_FOR_FRAGMENT"
     }
 
@@ -37,34 +35,32 @@ class CountriesSearchFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
         bindingFragmentSearch.searchButton.setOnClickListener {
-            val countryToast = bindingFragmentSearch.countryName.text.toString()
-            if (countryToast.isNotEmpty()){
-                CoroutineScope(Dispatchers.IO).launch {
+            val countryName = bindingFragmentSearch.countryName.text.toString()
+            if (countryName.isNotEmpty()){
+                CoroutineScope(Dispatchers.Main).launch {
                     try {
-                        val country = RetrofitClient.countriesAPI.getCountryByName(countryToast)
-                        val capital = country[0].capital?.joinToString(", ")
-                        val flag = country[0].flags.png
-                        val subregion = country[0].subregion
-                        val currencies = country[0].currencies.values.firstOrNull()?.name
+                        val country = withContext(Dispatchers.IO){
+                            RetrofitClient.countriesAPI.getCountryByName(countryName)
+                        }
+                        val firstCountry = country.firstOrNull()
 
-                        withContext(Dispatchers.Main){
-                            val capitalBundle = Bundle().apply {
-                                putString(CAPITAL_OF_THE_COUNTRY, capital)
-                                putString(FLAG, flag)
-                                putString(CURRENCIES, currencies)
-                                putString(SUBREGION, subregion)
+                        firstCountry?.let {
+                            val jsonString = Json.encodeToString(CountryResponse.serializer(), it)
+
+                            val countryBundle = Bundle().apply {
+                                putString(COUNTRY_DATA,jsonString )
                             }
-                            setFragmentResult(KEY_FOR_FRAGMENT, capitalBundle)
+
+                            setFragmentResult(KEY_FOR_FRAGMENT, countryBundle)
 
                             parentFragmentManager.beginTransaction()
-                                .replace(R.id.childFragmentContainer, CountryDetailsFragment())
+                                .replace(R.id.forChildDetailsFragment, CountryDetailsFragment())
                                 .addToBackStack(null)
                                 .commit()
                         }
+
                     } catch (e: Exception){
-                        withContext(Dispatchers.Main){
-                            Toast.makeText(context, "Ошибка: $e", Toast.LENGTH_SHORT).show()
-                        }
+                        Toast.makeText(context, "Ошибка: $e", Toast.LENGTH_SHORT).show()
                     }
                 }
             }else{
