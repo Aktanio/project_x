@@ -53,7 +53,7 @@ class CountriesSearchFragment : Fragment() {
 
                             setFragmentResult(KEY_FOR_FRAGMENT, countryBundle)
 
-                            parentFragmentManager.beginTransaction()
+                            childFragmentManager.beginTransaction()
                                 .replace(R.id.forChildDetailsFragment, CountryDetailsFragment())
                                 .addToBackStack(null)
                                 .commit()
