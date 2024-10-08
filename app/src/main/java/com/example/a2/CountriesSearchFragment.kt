@@ -18,6 +18,9 @@ class CountriesSearchFragment : Fragment() {
 
     companion object{
         const val CAPITAL_OF_THE_COUNTRY = "CAPITAL_OF_THE_COUNTRY"
+        const val FLAG = "FLAG_OF_THE_COUNTRY"
+        const val CURRENCIES = "CURRENCIES_OF_THE_COUNTRY"
+        const val SUBREGION = "SUBREGION_OF_THE_COUNTRY"
         const val KEY_FOR_FRAGMENT = "KEY_FOR_FRAGMENT"
     }
 
@@ -38,17 +41,23 @@ class CountriesSearchFragment : Fragment() {
             if (countryToast.isNotEmpty()){
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
-                        val response = RetrofitClient.countriesAPI.getCountryByName(countryToast)
-                        val capital = response[0].capital?.joinToString(", ")
+                        val country = RetrofitClient.countriesAPI.getCountryByName(countryToast)
+                        val capital = country[0].capital?.joinToString(", ")
+                        val flag = country[0].flags.png
+                        val subregion = country[0].subregion
+                        val currencies = country[0].currencies.values.firstOrNull()?.name
 
                         withContext(Dispatchers.Main){
                             val capitalBundle = Bundle().apply {
                                 putString(CAPITAL_OF_THE_COUNTRY, capital)
+                                putString(FLAG, flag)
+                                putString(CURRENCIES, currencies)
+                                putString(SUBREGION, subregion)
                             }
                             setFragmentResult(KEY_FOR_FRAGMENT, capitalBundle)
 
                             parentFragmentManager.beginTransaction()
-                                .replace(R.id.childFragmentContainer, CountriesListFragment())
+                                .replace(R.id.childFragmentContainer, CountryDetailsFragment())
                                 .addToBackStack(null)
                                 .commit()
                         }

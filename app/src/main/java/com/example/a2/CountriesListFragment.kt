@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
-import com.example.a2.CountriesSearchFragment.Companion.CAPITAL_OF_THE_COUNTRY
-import com.example.a2.CountriesSearchFragment.Companion.KEY_FOR_FRAGMENT
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a2.databinding.FragmentCountriesListBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CountriesListFragment : Fragment() {
     private lateinit var bindingFragmentList: FragmentCountriesListBinding
@@ -23,14 +25,21 @@ class CountriesListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setFragmentResultListener(KEY_FOR_FRAGMENT){key, bundle->
-            val toastText = bundle.getString(CAPITAL_OF_THE_COUNTRY)
-            if (!toastText.isNullOrEmpty()){
-                Toast.makeText(context, "Столица: $toastText", Toast.LENGTH_LONG).show()
-            }
-        }
         bindingFragmentList.backToMainFragment.setOnClickListener {
             parentFragmentManager.popBackStack()
+        }
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val countries = withContext(Dispatchers.IO){
+                    RetrofitClient.countriesAPI.getAllCountry()
+                }
+
+                bindingFragmentList.forAllCountry.adapter = CountryAdapter(countries)
+                bindingFragmentList.forAllCountry.layoutManager = LinearLayoutManager(context)
+
+            } catch (e: Exception){
+                    Toast.makeText(context, "Ошибка: $e", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

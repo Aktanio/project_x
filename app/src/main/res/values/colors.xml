@@ -6,4 +6,6 @@
     <color name="Red">#FF0000</color>
     <color name="SteelBlue">#4682B4</color>
     <color name="PeachPuff">#FFDAB9</color>
+    <color name="background">#74A2DE</color>
+    <color name="ivory">#F0FFF0</color>
 </resources>
