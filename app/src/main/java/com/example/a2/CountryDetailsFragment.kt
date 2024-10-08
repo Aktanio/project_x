@@ -1,19 +1,16 @@
 package com.example.a2
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import com.bumptech.glide.Glide
-import com.example.a2.CountriesSearchFragment.Companion.CAPITAL_OF_THE_COUNTRY
-import com.example.a2.CountriesSearchFragment.Companion.CURRENCIES
-import com.example.a2.CountriesSearchFragment.Companion.FLAG
+import com.example.a2.CountriesSearchFragment.Companion.COUNTRY_DATA
 import com.example.a2.CountriesSearchFragment.Companion.KEY_FOR_FRAGMENT
-import com.example.a2.CountriesSearchFragment.Companion.SUBREGION
 import com.example.a2.databinding.FragmentCountryDetailsBinding
+import kotlinx.serialization.json.Json
 
 class CountryDetailsFragment : Fragment() {
     private lateinit var bindingFragmentDetails: FragmentCountryDetailsBinding
@@ -28,20 +25,15 @@ class CountryDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setFragmentResultListener(KEY_FOR_FRAGMENT){ key, bundle->
-            val toastText = bundle.getString(CAPITAL_OF_THE_COUNTRY)
-            if (!toastText.isNullOrEmpty()){
-                Toast.makeText(context, "Столица: $toastText", Toast.LENGTH_LONG).show()
+            val jsonBundle = bundle.getString(COUNTRY_DATA)
+            jsonBundle?.let {
+                val countryResponse = Json.decodeFromString(CountryResponse.serializer(), jsonBundle)
+                bindingFragmentDetails.subregion.text = countryResponse.subregion
+                bindingFragmentDetails.currencies.text = countryResponse.currencies.values.firstOrNull()?.name
+                Glide.with(this)
+                    .load(countryResponse.flags.png)
+                    .into(bindingFragmentDetails.countryFlag)
             }
-            val flag = bundle.getString(FLAG)
-            Glide.with(this)
-                .load(flag)
-                .into(bindingFragmentDetails.countryFlag)
-
-            val currencies = bundle.getString(CURRENCIES)
-            bindingFragmentDetails.currencies.text = currencies
-
-            val subregion = bundle.getString(SUBREGION)
-            bindingFragmentDetails.subregion.text = subregion
         }
         bindingFragmentDetails.backToMainFragment.setOnClickListener {
             parentFragmentManager.popBackStack()

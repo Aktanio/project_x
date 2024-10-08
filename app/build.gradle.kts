@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 android {
@@ -48,6 +49,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
     implementation("androidx.fragment:fragment-ktx:1.8.3")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
