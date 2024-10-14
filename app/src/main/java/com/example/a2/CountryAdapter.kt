@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.a2.databinding.ItemForOneCountryBinding
 
-class CountryAdapter(private val countries: List<CountryResponse>, private val itemClick: (CountryResponse) -> Unit): RecyclerView.Adapter<CountryAdapter.MyViewHolder>() {
+class CountryAdapter(private val countries: List<CountryResponse>,
+                     private val itemClick: (CountryResponse) -> Unit): RecyclerView.Adapter<CountryAdapter.MyViewHolder>() {
 
-    class MyViewHolder(private val bindingItem: ItemForOneCountryBinding): RecyclerView.ViewHolder(bindingItem.root){
-        fun bind(country: CountryResponse, itemClick: (CountryResponse) -> Unit ){
+    inner class MyViewHolder(private val bindingItem: ItemForOneCountryBinding): RecyclerView.ViewHolder(bindingItem.root){
+        fun bind(country: CountryResponse){
             bindingItem.theCountry.text = country.name.common
             bindingItem.theCapital.text = country.capital?.joinToString(", ")
             Glide.with(bindingItem.forCountryFlag)
@@ -30,6 +31,6 @@ class CountryAdapter(private val countries: List<CountryResponse>, private val i
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(countries[position], itemClick)
+        holder.bind(countries[position])
     }
 }

@@ -44,7 +44,7 @@ class CountriesListFragment : Fragment() {
                     childFragmentManager.setFragmentResult(KEY_FOR_FRAGMENT, selectedCountryBundle)
 
                     childFragmentManager.beginTransaction()
-                        .replace(R.id.forChildDetailsFragment2, CountryDetailsFragment())
+                        .replace(R.id.detailsContainerInList, CountryDetailsFragment())
                         .addToBackStack(null)
                         .commit()
                 }
