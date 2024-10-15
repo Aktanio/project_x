@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import com.example.a2.databinding.FragmentCountriesSearchBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -45,16 +44,16 @@ class CountriesSearchFragment : Fragment() {
                         val firstCountry = country.firstOrNull()
 
                         firstCountry?.let {
-                            val jsonString = Json.encodeToString(CountryResponse.serializer(), it)
+                            val jsonAboutCountry = Json.encodeToString(CountryResponse.serializer(), it)
 
                             val countryBundle = Bundle().apply {
-                                putString(COUNTRY_DATA,jsonString )
+                                putString(COUNTRY_DATA,jsonAboutCountry)
                             }
 
-                            setFragmentResult(KEY_FOR_FRAGMENT, countryBundle)
+                            childFragmentManager.setFragmentResult(KEY_FOR_FRAGMENT, countryBundle)
 
                             childFragmentManager.beginTransaction()
-                                .replace(R.id.forChildDetailsFragment, CountryDetailsFragment())
+                                .replace(R.id.detailsContainerInSearch, CountryDetailsFragment())
                                 .addToBackStack(null)
                                 .commit()
                         }

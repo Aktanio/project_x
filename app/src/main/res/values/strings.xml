@@ -21,4 +21,18 @@
     <string name="currencies">TextView</string>
     <string name="name_of_the_country">Название страны:</string>
     <string name="the_country">TextView</string>
+    <string name="region">Регион:</string>
+    <string name="region_of_the_country">TextView</string>
+    <string name="continents">Континент(ы):</string>
+    <string name="continents_of_the_country">TextView</string>
+    <string name="car">Знаки машин и сторона передвижения:</string>
+    <string name="aboutCars">TextView</string>
+    <string name="official">Официальное название страны:</string>
+    <string name="official_name">TextView</string>
+    <string name="dash"> - </string>
+    <string name="officialNameEng">TextView</string>
+    <string name="comma"> , </string>
+    <string name="side">TextView</string>
+    <string name="squared">км²</string>
+
 </resources>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CountryDetailsFragment"
-    android:background="@color/white">
+    android:background="@color/ivory">
 
     <ImageView
         android:id="@+id/backToMainFragment"
@@ -19,10 +19,11 @@
 
     <ImageView
         android:id="@+id/countryFlag"
-        android:layout_width="250dp"
-        android:layout_height="170dp"
+        android:layout_width="210dp"
+        android:layout_height="130dp"
         android:layout_marginStart="13dp"
         android:layout_marginTop="11dp"
+        android:src="@drawable/profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/backToMainFragment"/>
 
@@ -31,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="25dp"
         android:text="@string/subregion_of_the_country"
         android:textSize="15sp"
         android:textStyle="bold"
@@ -43,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/subregion"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="25dp"
         android:textSize="15sp"
         android:layout_marginStart="5dp"
         app:layout_constraintStart_toEndOf="@+id/countrySubregion"
@@ -71,4 +72,219 @@
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/countryCurrencies"
         app:layout_constraintTop_toBottomOf="@+id/subregion" />
+
+    <TextView
+        android:id="@+id/countryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="49dp"
+        android:text="@string/country"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/countryFlag"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/capital"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/capital_name"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/countryFlag"
+        app:layout_constraintTop_toBottomOf="@+id/countryName" />
+
+    <TextView
+        android:id="@+id/region"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/region"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/countryFlag"
+        app:layout_constraintTop_toBottomOf="@+id/capital" />
+
+    <TextView
+        android:id="@+id/region_of_the_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/region_of_the_country"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@+id/region"
+        app:layout_constraintTop_toBottomOf="@+id/capital" />
+
+    <TextView
+        android:id="@+id/population"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="13dp"
+        android:text="@string/population_of_the_country"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/countryCurrencies" />
+
+    <TextView
+        android:id="@+id/population_of_the_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/population"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@+id/population"
+        app:layout_constraintTop_toBottomOf="@+id/currencies" />
+
+    <TextView
+        android:id="@+id/area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/area_of_the_country"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="13dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/population" />
+
+    <TextView
+        android:id="@+id/area_of_the_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/area"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@+id/area"
+        app:layout_constraintTop_toBottomOf="@+id/population_of_the_country" />
+
+    <TextView
+        android:id="@+id/squared"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/squared"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@+id/area_of_the_country"
+        app:layout_constraintTop_toBottomOf="@+id/population_of_the_country" />
+
+    <TextView
+        android:id="@+id/continents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/continents"
+        android:textStyle="bold"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="13dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/area" />
+
+    <TextView
+        android:id="@+id/continents_of_the_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/continents_of_the_country"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@+id/continents"
+        app:layout_constraintTop_toBottomOf="@+id/area_of_the_country" />
+
+    <TextView
+        android:id="@+id/languages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/language_of_the_country"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="13dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/continents" />
+
+    <TextView
+        android:id="@+id/languages_of_the_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/languages"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="13dp"
+        app:layout_constraintStart_toEndOf="@+id/languages"
+        app:layout_constraintTop_toBottomOf="@+id/continents_of_the_country" />
+
+    <TextView
+        android:id="@+id/cars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/car"
+        android:layout_marginTop="13dp"
+        android:layout_marginStart="13dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/languages" />
+
+    <TextView
+        android:id="@+id/signsCars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/aboutCars"
+        android:layout_marginStart="13dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cars" />
+
+    <TextView
+        android:id="@+id/comma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/comma"
+        app:layout_constraintStart_toEndOf="@+id/signsCars"
+        app:layout_constraintTop_toBottomOf="@+id/cars" />
+
+    <TextView
+        android:id="@+id/sideCars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/side"
+        android:layout_marginStart="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/cars"
+        app:layout_constraintStart_toEndOf="@id/comma"/>
+
+    <TextView
+        android:id="@+id/official"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/official"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="13dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signsCars" />
+
+    <TextView
+        android:id="@+id/officialName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/official_name"
+        android:layout_marginStart="13dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/official" />
+
+    <TextView
+        android:id="@+id/dash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="@string/dash"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/officialName"
+        app:layout_constraintTop_toBottomOf="@+id/official" />
+
+    <TextView
+        android:id="@+id/officialNameEng"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/officialNameEng"
+        android:layout_marginStart="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/official"
+        app:layout_constraintStart_toEndOf="@id/dash"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
