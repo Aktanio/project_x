@@ -14,7 +14,7 @@
     <string name="languages">TextView</string>
     <string name="search_country">Поиск стран</string>
     <string name="list_country">Список стран</string>
-    <string name="country_name">Название</string>
+    <string name="name_for_search">Название</string>
     <string name="subregion_of_the_country">Субрегион:</string>
     <string name="subregion">TextView</string>
     <string name="currencies_of_the_country">Валюта:</string>
@@ -34,5 +34,14 @@
     <string name="comma"> , </string>
     <string name="side">TextView</string>
     <string name="squared">км²</string>
-
+    <string name="art_search_button">Поиск картины</string>
+    <string name="art_list_button">Список картин</string>
+    <string name="name_art">Название картины:</string>
+    <string name="title_of_the_art">TextView</string>
+    <string name="about_creator">О художнике:</string>
+    <string name="creator">TextView</string>
+    <string name="style_title">Стиль картины:</string>
+    <string name="style">TextView</string>
+    <string name="title">TextView</string>
+    <string name="year_the_painting">Год создания картины:</string>
 </resources>

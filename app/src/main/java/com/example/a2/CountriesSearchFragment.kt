@@ -16,7 +16,7 @@ import kotlinx.serialization.json.Json
 class CountriesSearchFragment : Fragment() {
     private lateinit var bindingFragmentSearch: FragmentCountriesSearchBinding
 
-    companion object{
+    companion object {
         const val COUNTRY_DATA = "COUNTRY_DATA"
         const val KEY_FOR_FRAGMENT = "KEY_FOR_FRAGMENT"
     }
@@ -35,19 +35,20 @@ class CountriesSearchFragment : Fragment() {
         }
         bindingFragmentSearch.searchButton.setOnClickListener {
             val countryName = bindingFragmentSearch.countryName.text.toString()
-            if (countryName.isNotEmpty()){
+            if (countryName.isNotEmpty()) {
                 CoroutineScope(Dispatchers.Main).launch {
                     try {
-                        val country = withContext(Dispatchers.IO){
-                            RetrofitClient.countriesAPI.getCountryByName(countryName)
+                        val country = withContext(Dispatchers.IO) {
+                            RetrofitCountriesClient.countriesAPI.getCountryByName(countryName)
                         }
                         val firstCountry = country.firstOrNull()
 
                         firstCountry?.let {
-                            val jsonAboutCountry = Json.encodeToString(CountryResponse.serializer(), it)
+                            val jsonAboutCountry =
+                                Json.encodeToString(CountryResponse.serializer(), it)
 
                             val countryBundle = Bundle().apply {
-                                putString(COUNTRY_DATA,jsonAboutCountry)
+                                putString(COUNTRY_DATA, jsonAboutCountry)
                             }
 
                             childFragmentManager.setFragmentResult(KEY_FOR_FRAGMENT, countryBundle)
@@ -58,11 +59,11 @@ class CountriesSearchFragment : Fragment() {
                                 .commit()
                         }
 
-                    } catch (e: Exception){
+                    } catch (e: Exception) {
                         Toast.makeText(context, "Ошибка: $e", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }else{
+            } else {
                 Toast.makeText(context, "Введите название страны", Toast.LENGTH_LONG).show()
             }
         }

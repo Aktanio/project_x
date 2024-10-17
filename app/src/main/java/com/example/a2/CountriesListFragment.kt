@@ -34,7 +34,7 @@ class CountriesListFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val countries = withContext(Dispatchers.IO){
-                    RetrofitClient.countriesAPI.getAllCountry()
+                    RetrofitCountriesClient.countriesAPI.getAllCountry()
                 }
                 bindingFragmentList.forAllCountry.adapter = CountryAdapter(countries){ selectedCountry->
                     val jsonInfoCountry = Json.encodeToString(CountryResponse.serializer(), selectedCountry)
