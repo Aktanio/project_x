@@ -25,6 +25,12 @@ class MainFragment : Fragment() {
         bindingFragment.listCountry.setOnClickListener {
             openChildFragment(CountriesListFragment())
         }
+        bindingFragment.artSearchButton.setOnClickListener {
+            openChildFragment(ArtSearchFragment())
+        }
+        bindingFragment.artListButton.setOnClickListener {
+            openChildFragment(ArtListFragment())
+        }
     }
     private fun openChildFragment(childFragment: Fragment){
         childFragmentManager.beginTransaction()

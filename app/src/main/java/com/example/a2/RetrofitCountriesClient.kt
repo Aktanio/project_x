@@ -3,7 +3,7 @@ package com.example.a2
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitClient {
+object RetrofitCountriesClient {
     private const val MAIN_URL = "https://restcountries.com/"
 
     val retrofit = Retrofit.Builder()
