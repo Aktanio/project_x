@@ -12,13 +12,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
 class CountriesSearchFragment : Fragment() {
     private lateinit var bindingFragmentSearch: FragmentCountriesSearchBinding
+    @Inject
+    lateinit var countriesAPI: CountriesAPI
 
     companion object {
         const val COUNTRY_DATA = "COUNTRY_DATA"
         const val KEY_FOR_FRAGMENT = "KEY_FOR_FRAGMENT"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (requireActivity().application as MyApp).appComponent.injectCountrySearch(this)
     }
 
     override fun onCreateView(
@@ -39,7 +47,7 @@ class CountriesSearchFragment : Fragment() {
                 CoroutineScope(Dispatchers.Main).launch {
                     try {
                         val country = withContext(Dispatchers.IO) {
-                            RetrofitCountriesClient.countriesAPI.getCountryByName(countryName)
+                            countriesAPI.getCountryByName(countryName)
                         }
                         val firstCountry = country.firstOrNull()
 

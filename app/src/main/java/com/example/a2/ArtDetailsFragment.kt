@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.a2.ArtSearchFragment.Companion.ART_DATA
 import com.example.a2.ArtSearchFragment.Companion.ART_KEY_FOR_FRAGMENT
-import com.example.a2.RetrofitArtClient.BASE_URL_FOR_IMAGE
-import com.example.a2.RetrofitArtClient.IMAGE_SIZE
+import com.example.a2.RetrofitModule.BASE_URL_FOR_IMAGE
+import com.example.a2.RetrofitModule.IMAGE_SIZE
 import com.example.a2.databinding.FragmentArtDetailsBinding
 import kotlinx.serialization.json.Json
 
