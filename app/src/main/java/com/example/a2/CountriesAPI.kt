@@ -2,7 +2,6 @@ package com.example.a2
 
 import retrofit2.http.GET
 import retrofit2.http.Path
-import javax.inject.Inject
 
 interface CountriesAPI {
     @GET("v3.1/name/{name}")
