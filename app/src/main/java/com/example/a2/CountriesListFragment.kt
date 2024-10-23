@@ -15,9 +15,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
 class CountriesListFragment : Fragment() {
     private lateinit var bindingFragmentList: FragmentCountriesListBinding
+    @Inject
+    lateinit var countriesAPI: CountriesAPI
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (requireActivity().application as MyApp).appComponent.injectCountryList(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +42,7 @@ class CountriesListFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val countries = withContext(Dispatchers.IO){
-                    RetrofitCountriesClient.countriesAPI.getAllCountry()
+                    countriesAPI.getAllCountry()
                 }
                 bindingFragmentList.forAllCountry.adapter = CountryAdapter(countries){ selectedCountry->
                     val jsonInfoCountry = Json.encodeToString(CountryResponse.serializer(), selectedCountry)
