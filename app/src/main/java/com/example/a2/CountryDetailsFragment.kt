@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.a2.CountriesSearchFragment.Companion.COUNTRY_DATA
 import com.example.a2.CountriesSearchFragment.Companion.KEY_FOR_FRAGMENT
 import com.example.a2.databinding.FragmentCountryDetailsBinding
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
 class CountryDetailsFragment : Fragment() {
@@ -26,8 +27,8 @@ class CountryDetailsFragment : Fragment() {
         parentFragmentManager.setFragmentResultListener(KEY_FOR_FRAGMENT, this){ key, bundle->
             val jsonBundle = bundle.getString(COUNTRY_DATA)
             jsonBundle?.let {
-                val countryResponse = Json.decodeFromString(CountryResponse.serializer(), jsonBundle)
-                updateUI(countryResponse)
+                val countryResponse = Json.decodeFromString(ListSerializer(CountryResponse.serializer()), jsonBundle)
+                updateUI(countryResponse[0])
             }
         }
         bindingFragmentDetails.backToMainFragment.setOnClickListener {

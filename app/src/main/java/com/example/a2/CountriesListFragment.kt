@@ -4,27 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a2.CountriesSearchFragment.Companion.COUNTRY_DATA
 import com.example.a2.CountriesSearchFragment.Companion.KEY_FOR_FRAGMENT
 import com.example.a2.databinding.FragmentCountriesListBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class CountriesListFragment : Fragment() {
     private lateinit var bindingFragmentList: FragmentCountriesListBinding
     @Inject
-    lateinit var countriesAPI: CountriesAPI
+    lateinit var viewModelFactory: CountryViewModelFactory
+    private lateinit var listCountryViewModel: CountryListViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (requireActivity().application as MyApp).appComponent.injectCountryList(this)
+        listCountryViewModel = ViewModelProvider(this, viewModelFactory).get(CountryListViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -39,28 +39,23 @@ class CountriesListFragment : Fragment() {
         bindingFragmentList.backToMainFragment.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                val countries = withContext(Dispatchers.IO){
-                    countriesAPI.getAllCountry()
-                }
-                bindingFragmentList.forAllCountry.adapter = CountryAdapter(countries){ selectedCountry->
-                    val jsonInfoCountry = Json.encodeToString(CountryResponse.serializer(), selectedCountry)
-                    val selectedCountryBundle = Bundle().apply {
-                        putString(COUNTRY_DATA,jsonInfoCountry)
-                    }
-                    childFragmentManager.setFragmentResult(KEY_FOR_FRAGMENT, selectedCountryBundle)
+        listCountryViewModel.getAllCountries()
 
-                    childFragmentManager.beginTransaction()
-                        .replace(R.id.detailsContainerInList, CountryDetailsFragment())
-                        .addToBackStack(null)
-                        .commit()
+        listCountryViewModel.countriesLiveData.observe(viewLifecycleOwner){countryResponse->
+            bindingFragmentList.forAllCountry.adapter = CountryAdapter(countryResponse){selectedMeal->
+                val jsonInfoCountry = Json.encodeToString(ListSerializer(CountryResponse.serializer()),listOf(selectedMeal)
+                )
+                val selectedCountryBundle = Bundle().apply {
+                    putString(COUNTRY_DATA, jsonInfoCountry)
                 }
-                bindingFragmentList.forAllCountry.layoutManager = LinearLayoutManager(context)
+                childFragmentManager.setFragmentResult(KEY_FOR_FRAGMENT, selectedCountryBundle)
 
-            } catch (e: Exception){
-                    Toast.makeText(context, "Ошибка: $e", Toast.LENGTH_SHORT).show()
+                childFragmentManager.beginTransaction()
+                    .replace(R.id.detailsContainerInList, CountryDetailsFragment())
+                    .addToBackStack(null)
+                    .commit()
             }
+            bindingFragmentList.forAllCountry.layoutManager = LinearLayoutManager(context)
         }
     }
 }

@@ -11,6 +11,7 @@ import com.example.a2.ArtSearchFragment.Companion.ART_KEY_FOR_FRAGMENT
 import com.example.a2.RetrofitModule.BASE_URL_FOR_IMAGE
 import com.example.a2.RetrofitModule.IMAGE_SIZE
 import com.example.a2.databinding.FragmentArtDetailsBinding
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
 class ArtDetailsFragment : Fragment() {
@@ -30,7 +31,7 @@ class ArtDetailsFragment : Fragment() {
         }
         parentFragmentManager.setFragmentResultListener(ART_KEY_FOR_FRAGMENT, this) { key, bundle ->
             bundle.getString(ART_DATA)?.let {
-                val artResponse = Json.decodeFromString<ArtworksResponse.Artwork>(it)
+                val artResponse = Json.decodeFromString(ArtworksResponse.Artwork.serializer(),it)
                 showInfoArt(artResponse)
             }
         }

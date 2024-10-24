@@ -6,18 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.a2.databinding.FragmentCountriesSearchBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 class CountriesSearchFragment : Fragment() {
     private lateinit var bindingFragmentSearch: FragmentCountriesSearchBinding
     @Inject
-    lateinit var countriesAPI: CountriesAPI
+    lateinit var viewModelFactory: CountryViewModelFactory
+    private lateinit var countrySearchViewModel: CountrySearchViewModel
 
     companion object {
         const val COUNTRY_DATA = "COUNTRY_DATA"
@@ -27,6 +26,7 @@ class CountriesSearchFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (requireActivity().application as MyApp).appComponent.injectCountrySearch(this)
+        countrySearchViewModel = ViewModelProvider(this, viewModelFactory).get(CountrySearchViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -44,35 +44,22 @@ class CountriesSearchFragment : Fragment() {
         bindingFragmentSearch.searchButton.setOnClickListener {
             val countryName = bindingFragmentSearch.countryName.text.toString()
             if (countryName.isNotEmpty()) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    try {
-                        val country = withContext(Dispatchers.IO) {
-                            countriesAPI.getCountryByName(countryName)
-                        }
-                        val firstCountry = country.firstOrNull()
+                countrySearchViewModel.getCountryByName(countryName)
 
-                        firstCountry?.let {
-                            val jsonAboutCountry =
-                                Json.encodeToString(CountryResponse.serializer(), it)
-
-                            val countryBundle = Bundle().apply {
-                                putString(COUNTRY_DATA, jsonAboutCountry)
-                            }
-
-                            childFragmentManager.setFragmentResult(KEY_FOR_FRAGMENT, countryBundle)
-
-                            childFragmentManager.beginTransaction()
-                                .replace(R.id.detailsContainerInSearch, CountryDetailsFragment())
-                                .addToBackStack(null)
-                                .commit()
-                        }
-
-                    } catch (e: Exception) {
-                        Toast.makeText(context, "Ошибка: $e", Toast.LENGTH_SHORT).show()
+                countrySearchViewModel.countrySearchLiveData.observe(viewLifecycleOwner){ countryResponse->
+                    val jsonInfoCountry = Json.encodeToString(ListSerializer(CountryResponse.serializer()), countryResponse)
+                    val countryBundle = Bundle().apply {
+                        putString(COUNTRY_DATA, jsonInfoCountry)
                     }
+                    childFragmentManager.setFragmentResult(KEY_FOR_FRAGMENT, countryBundle)
+
+                    childFragmentManager.beginTransaction()
+                        .replace(R.id.detailsContainerInSearch, CountryDetailsFragment())
+                        .addToBackStack(null)
+                        .commit()
                 }
-            } else {
-                Toast.makeText(context, "Введите название страны", Toast.LENGTH_LONG).show()
+            }else{
+                Toast.makeText(context, "Введите название страны", Toast.LENGTH_SHORT).show()
             }
         }
     }
