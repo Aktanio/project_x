@@ -1,11 +1,8 @@
 package com.example.a2
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.a2.databinding.ActivityMainBinding
 
@@ -13,6 +10,7 @@ import com.example.a2.databinding.ActivityMainBinding
 @SuppressLint("UseSwitchCompatOrMaterialCode")
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val viewmodel: MainActivityViewModel by viewModels()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,8 +18,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.mainFragmentContainer, MainFragment())
-            .commit()
+        viewmodel.mainFragment.observe(this) {isMainFragmentOpen->
+            if (!isMainFragmentOpen) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.mainFragmentContainer, MainFragment())
+                    .commit()
+
+                viewmodel.setMainFragment()
+            }
+        }
     }
 }

@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.a2.databinding.FragmentArtSearchBinding
-import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
@@ -26,7 +25,7 @@ class ArtSearchFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (requireActivity().application as MyApp).appComponent.injectArtSearch(this)
-        artSearchViewModel = ViewModelProvider(this, artSearchViewModelFactory).get(ArtSearchViewModel::class.java)
+        artSearchViewModel = ViewModelProvider(requireActivity(), artSearchViewModelFactory).get(ArtSearchViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -51,12 +50,11 @@ class ArtSearchFragment : Fragment() {
                         putString(ART_DATA, jsonArtInfo)
                     }
                     childFragmentManager.setFragmentResult(ART_KEY_FOR_FRAGMENT, artBundle)
-
+                }
                     childFragmentManager.beginTransaction()
                         .replace(R.id.artDetailsContainerInSearch, ArtDetailsFragment())
                         .addToBackStack(null)
                         .commit()
-                }
             } else {
                 Toast.makeText(context, "Введите название", Toast.LENGTH_SHORT).show()
             }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.a2.CountriesSearchFragment.Companion.COUNTRY_DATA
 import com.example.a2.CountriesSearchFragment.Companion.KEY_FOR_FRAGMENT
@@ -14,6 +15,8 @@ import kotlinx.serialization.json.Json
 
 class CountryDetailsFragment : Fragment() {
     private lateinit var bindingFragmentDetails: FragmentCountryDetailsBinding
+    private val countryDetailsViewModel: CountryDetailsViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,15 +27,18 @@ class CountryDetailsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        parentFragmentManager.setFragmentResultListener(KEY_FOR_FRAGMENT, this){ key, bundle->
-            val jsonBundle = bundle.getString(COUNTRY_DATA)
-            jsonBundle?.let {
-                val countryResponse = Json.decodeFromString(ListSerializer(CountryResponse.serializer()), jsonBundle)
-                updateUI(countryResponse[0])
-            }
-        }
+
         bindingFragmentDetails.backToMainFragment.setOnClickListener {
             parentFragmentManager.popBackStack()
+        }
+        countryDetailsViewModel.countryDetailsLiveData.observe(viewLifecycleOwner){country->
+            updateUI(country)
+        }
+        parentFragmentManager.setFragmentResultListener(KEY_FOR_FRAGMENT, this){ key, bundle->
+            bundle.getString(COUNTRY_DATA)?.let {json->
+                val countryResponse = Json.decodeFromString(ListSerializer(CountryResponse.serializer()), json)
+                countryDetailsViewModel.infoCountry(countryResponse)
+            }
         }
     }
     private fun updateUI(country: CountryResponse) = with(bindingFragmentDetails){

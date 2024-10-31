@@ -40,11 +40,9 @@ class CountriesListFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
         listCountryViewModel.getAllCountries()
-
         listCountryViewModel.countriesLiveData.observe(viewLifecycleOwner){countryResponse->
             bindingFragmentList.forAllCountry.adapter = CountryAdapter(countryResponse){selectedMeal->
-                val jsonInfoCountry = Json.encodeToString(ListSerializer(CountryResponse.serializer()),listOf(selectedMeal)
-                )
+                val jsonInfoCountry = Json.encodeToString(ListSerializer(CountryResponse.serializer()),listOf(selectedMeal))
                 val selectedCountryBundle = Bundle().apply {
                     putString(COUNTRY_DATA, jsonInfoCountry)
                 }
