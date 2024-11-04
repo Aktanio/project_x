@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.a2.databinding.ActivityMainBinding
+import com.example.a2.fragments.MainFragment
+import com.example.a2.viewModel.MainActivityViewModel
 
 
 @SuppressLint("UseSwitchCompatOrMaterialCode")
@@ -18,13 +20,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewmodel.mainFragment.observe(this) {isMainFragmentOpen->
-            if (!isMainFragmentOpen) {
+        viewmodel.isMainFragmentOpened.observe(this) {needToOpenMainFragment->
+            if (needToOpenMainFragment) {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.mainFragmentContainer, MainFragment())
                     .commit()
 
-                viewmodel.setMainFragment()
+                viewmodel.onMainFragmentOpened()
             }
         }
     }
