@@ -17,9 +17,9 @@ import javax.inject.Inject
 class ArtSearchFragment : Fragment() {
     private lateinit var bindingArtSearch: FragmentArtSearchBinding
     @Inject
-    lateinit var artSearchViewModelFactory: ViewModelFactory
+    lateinit var viewModelFactory: ViewModelFactory
     private val artSearchViewModel: ArtSearchViewModel by lazy {
-        ViewModelProvider(requireActivity(), artSearchViewModelFactory).get(ArtSearchViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory).get(ArtSearchViewModel::class.java)
     }
 
     companion object {

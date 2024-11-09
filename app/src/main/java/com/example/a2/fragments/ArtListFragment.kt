@@ -22,9 +22,9 @@ import javax.inject.Inject
 class ArtListFragment : Fragment() {
     private lateinit var bindingArtList: FragmentArtListBinding
     @Inject
-    lateinit var artListViewModelFactory: ViewModelFactory
+    lateinit var viewModelFactory: ViewModelFactory
     private val artListViewModel: ArtListViewModel by lazy {
-        ViewModelProvider(this, artListViewModelFactory).get(ArtListViewModel::class.java)
+        ViewModelProvider(this, viewModelFactory).get(ArtListViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

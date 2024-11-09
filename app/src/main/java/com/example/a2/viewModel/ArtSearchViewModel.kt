@@ -1,5 +1,6 @@
 package com.example.a2.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,5 +22,11 @@ class ArtSearchViewModel @Inject constructor(
         val art = artRepository.getArtByName(artName)
         val jsonInfoArt = Json.encodeToString(ArtworksResponse.Artwork.serializer(), art)
         _artInfoLiveData.value = jsonInfoArt
+        Log.d("searchViewModel","viewmodel создалась")
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d("searchViewModel","viewmodel уничтожилась")
     }
 }
