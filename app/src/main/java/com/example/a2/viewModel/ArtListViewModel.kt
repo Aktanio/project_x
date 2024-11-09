@@ -1,6 +1,5 @@
 package com.example.a2.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,11 +19,5 @@ class ArtListViewModel @Inject constructor(
         viewModelScope.launch {
             _artListLiveData.value = artRepository.getAllArtworks(page)
         }
-        Log.d("listViewModel","viewModel создалась")
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        Log.d("listViewModel","viewmodel стерлась")
     }
 }
