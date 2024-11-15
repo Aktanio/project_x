@@ -7,15 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.example.a2.viewModel.ArtDetailsViewModel
-import com.example.a2.data.ArtworksResponse
 import com.example.a2.R
-import com.example.a2.fragments.ArtSearchFragment.Companion.ART_DATA
-import com.example.a2.fragments.ArtSearchFragment.Companion.ART_KEY_FOR_FRAGMENT
+import com.example.a2.data.ArtworksResponse
+import com.example.a2.databinding.FragmentArtDetailsBinding
 import com.example.a2.di.RetrofitModule.BASE_URL_FOR_IMAGE
 import com.example.a2.di.RetrofitModule.IMAGE_SIZE
-import com.example.a2.databinding.FragmentArtDetailsBinding
-import kotlinx.serialization.json.Json
+import com.example.a2.fragments.ArtSearchFragment.Companion.ART_DATA
+import com.example.a2.fragments.ArtSearchFragment.Companion.ART_KEY_FOR_FRAGMENT
+import com.example.a2.viewModel.ArtDetailsViewModel
 
 class ArtDetailsFragment : Fragment() {
     private lateinit var bindingArtDetails: FragmentArtDetailsBinding
@@ -37,9 +36,8 @@ class ArtDetailsFragment : Fragment() {
             showInfoArt(art)
         }
         parentFragmentManager.setFragmentResultListener(ART_KEY_FOR_FRAGMENT, this) { key, bundle ->
-            bundle.getString(ART_DATA)?.let {
-                val artResponse = Json.decodeFromString(ArtworksResponse.Artwork.serializer(),it)
-                artDetailsViewModel.infoArt(artResponse)
+            bundle.getString(ART_DATA)?.let { jsonInfoArt->
+                artDetailsViewModel.requestArt(jsonInfoArt)
             }
         }
     }

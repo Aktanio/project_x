@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.a2.viewModel.ArtSearchViewModel
 import com.example.a2.di.MyApp
 import com.example.a2.R
 import com.example.a2.viewModel.ViewModelFactory
 import com.example.a2.databinding.FragmentArtSearchBinding
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ArtSearchFragment : Fragment() {
@@ -42,12 +46,23 @@ class ArtSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        artSearchViewModel.artInfoLiveData.observe(viewLifecycleOwner){jsonArtInfo->
-            val artBundle = Bundle().apply {
-                putString(ART_DATA, jsonArtInfo)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                artSearchViewModel.artInfoSharedFlow.collect{ jsonArtInfo->
+                    val artBundle = Bundle().apply {
+                        putString(ART_DATA, jsonArtInfo)
+                    }
+                    childFragmentManager.setFragmentResult(ART_KEY_FOR_FRAGMENT, artBundle)
+
+                    childFragmentManager.beginTransaction()
+                        .replace(R.id.artDetailsContainerInSearch, ArtDetailsFragment())
+                        .addToBackStack(null)
+                        .commit()
+                }
             }
-            childFragmentManager.setFragmentResult(ART_KEY_FOR_FRAGMENT, artBundle)
         }
+
+
         bindingArtSearch.backToMainFragment.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
@@ -56,10 +71,6 @@ class ArtSearchFragment : Fragment() {
             if (bindingArtSearch.nameArtSearch.text.isNotEmpty()) {
                 artSearchViewModel.onSearchButtonClicked(bindingArtSearch.nameArtSearch.text.toString())
 
-                childFragmentManager.beginTransaction()
-                    .replace(R.id.artDetailsContainerInSearch, ArtDetailsFragment())
-                    .addToBackStack(null)
-                    .commit()
             } else{
                 Toast.makeText(context, "Введите название страны", Toast.LENGTH_SHORT).show()
             }

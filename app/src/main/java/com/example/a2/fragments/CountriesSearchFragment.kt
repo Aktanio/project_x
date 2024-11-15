@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.a2.R
 import com.example.a2.databinding.FragmentCountriesSearchBinding
 import com.example.a2.di.MyApp
 import com.example.a2.viewModel.CountrySearchViewModel
 import com.example.a2.viewModel.ViewModelFactory
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CountriesSearchFragment : Fragment() {
@@ -42,12 +46,22 @@ class CountriesSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        countrySearchViewModel.countryInfoLiveData.observe(viewLifecycleOwner){ jsonInfoCountry->
-            val countryBundle = Bundle().apply {
-                putString(COUNTRY_DATA, jsonInfoCountry)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                countrySearchViewModel.countryInfoSharedFlow.collect{jsonInfoCountry->
+                    val countryBundle = Bundle().apply {
+                        putString(COUNTRY_DATA, jsonInfoCountry)
+                    }
+                    childFragmentManager.setFragmentResult(KEY_FOR_FRAGMENT, countryBundle)
+
+                    childFragmentManager.beginTransaction()
+                        .replace(R.id.detailsContainerInSearch, CountryDetailsFragment())
+                        .addToBackStack(null)
+                        .commit()
+                }
             }
-            childFragmentManager.setFragmentResult(KEY_FOR_FRAGMENT, countryBundle)
         }
+
         bindingFragmentSearch.backToMainFragmentFromSearch.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
@@ -56,10 +70,6 @@ class CountriesSearchFragment : Fragment() {
 
                 countrySearchViewModel.onSearchButtonClicked(bindingFragmentSearch.countryName.text.toString())
 
-                childFragmentManager.beginTransaction()
-                    .replace(R.id.detailsContainerInSearch, CountryDetailsFragment())
-                    .addToBackStack(null)
-                    .commit()
             } else{
                 Toast.makeText(context, "Введите название страны", Toast.LENGTH_SHORT).show()
             }

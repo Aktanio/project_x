@@ -12,8 +12,6 @@ import com.example.a2.databinding.FragmentCountryDetailsBinding
 import com.example.a2.fragments.CountriesSearchFragment.Companion.COUNTRY_DATA
 import com.example.a2.fragments.CountriesSearchFragment.Companion.KEY_FOR_FRAGMENT
 import com.example.a2.viewModel.CountryDetailsViewModel
-import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.json.Json
 
 class CountryDetailsFragment : Fragment() {
     private lateinit var bindingFragmentDetails: FragmentCountryDetailsBinding
@@ -37,9 +35,8 @@ class CountryDetailsFragment : Fragment() {
             updateUI(country)
         }
         parentFragmentManager.setFragmentResultListener(KEY_FOR_FRAGMENT, this){ key, bundle->
-            bundle.getString(COUNTRY_DATA)?.let {json->
-                val countryResponse = Json.decodeFromString(ListSerializer(CountryResponse.serializer()), json)
-                countryDetailsViewModel.infoCountry(countryResponse[0])
+            bundle.getString(COUNTRY_DATA)?.let {jsonInfoCountry->
+                countryDetailsViewModel.requestCountry(jsonInfoCountry)
             }
         }
     }

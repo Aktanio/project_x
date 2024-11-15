@@ -48,7 +48,7 @@ class CountriesListFragment : Fragment() {
         }
         listCountryViewModel.countriesLiveData.observe(viewLifecycleOwner){countryResponse->
             bindingFragmentList.forAllCountry.adapter = CountryAdapter(countryResponse){selectedMeal->
-                val jsonInfoCountry = Json.encodeToString(ListSerializer(CountryResponse.serializer()),listOf(selectedMeal))
+                val jsonInfoCountry = Json.encodeToString(CountryResponse.serializer(),selectedMeal)
                 val selectedCountryBundle = Bundle().apply {
                     putString(COUNTRY_DATA, jsonInfoCountry)
                 }
