@@ -36,7 +36,7 @@ class CountryDetailsFragment : Fragment() {
         }
         parentFragmentManager.setFragmentResultListener(KEY_FOR_FRAGMENT, this){ key, bundle->
             bundle.getString(COUNTRY_DATA)?.let {jsonInfoCountry->
-                countryDetailsViewModel.requestCountry(jsonInfoCountry)
+                countryDetailsViewModel.onCountryReceived(jsonInfoCountry)
             }
         }
     }

@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModel
 
 class MainActivityViewModel: ViewModel() {
 
-    private val _isMainFragmentOpened = MutableLiveData<Boolean>()
-    val isMainFragmentOpened: LiveData<Boolean> = _isMainFragmentOpened
+    private val _isMainFragmentNotOpened = MutableLiveData<Boolean>()
+    val isMainFragmentNotOpened: LiveData<Boolean> = _isMainFragmentNotOpened
 
     init {
-        _isMainFragmentOpened.value = true
+        _isMainFragmentNotOpened.value = true
     }
     fun onMainFragmentOpened(){
-        _isMainFragmentOpened.value = false
+        _isMainFragmentNotOpened.value = false
     }
 }

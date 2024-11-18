@@ -10,7 +10,11 @@ class CountryDetailsViewModel: ViewModel() {
     private val _countryDetailsLiveData = MutableLiveData<CountryResponse>()
     val countryDetailsLiveData: LiveData<CountryResponse> = _countryDetailsLiveData
 
-    fun requestCountry(country: String){
+    fun onCountryReceived(countryJson: String){
+        requestCountry(countryJson)
+    }
+
+    private fun requestCountry(country: String){
         val jsonInfoCountry = Json.decodeFromString(CountryResponse.serializer(), country)
         _countryDetailsLiveData.value = jsonInfoCountry
     }

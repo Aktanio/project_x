@@ -37,7 +37,7 @@ class ArtDetailsFragment : Fragment() {
         }
         parentFragmentManager.setFragmentResultListener(ART_KEY_FOR_FRAGMENT, this) { key, bundle ->
             bundle.getString(ART_DATA)?.let { jsonInfoArt->
-                artDetailsViewModel.requestArt(jsonInfoArt)
+                artDetailsViewModel.onArtReceived(jsonInfoArt)
             }
         }
     }

@@ -10,7 +10,11 @@ class ArtDetailsViewModel: ViewModel() {
     private val _artDetailsLiveData = MutableLiveData<ArtworksResponse.Artwork>()
     val artDetailLiveData: LiveData<ArtworksResponse.Artwork> = _artDetailsLiveData
 
-    fun requestArt(art: String){
+    fun onArtReceived(artJson: String){
+        requestArt(artJson)
+    }
+
+    private fun requestArt(art: String){
         val jsonInfoArt = Json.decodeFromString(ArtworksResponse.Artwork.serializer(), art)
         _artDetailsLiveData.value = jsonInfoArt
     }

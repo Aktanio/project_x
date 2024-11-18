@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewmodel.isMainFragmentOpened.observe(this) {isMainFragmentNotOpened->
+        viewmodel.isMainFragmentNotOpened.observe(this) {isMainFragmentNotOpened->
             if (isMainFragmentNotOpened) {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.mainFragmentContainer, MainFragment())
