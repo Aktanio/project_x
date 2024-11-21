@@ -1,5 +1,7 @@
-package com.example.a2
+package com.example.a2.di
 
+import com.example.a2.data.ArtworksAPI
+import com.example.a2.data.CountriesAPI
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -23,7 +25,7 @@ object RetrofitModule {
     }
 
     @Provides
-    fun provideArtAPI(@Named("artRetrofit")retrofit: Retrofit): ArtworksAPI{
+    fun provideArtAPI(@Named("artRetrofit")retrofit: Retrofit): ArtworksAPI {
         return retrofit.create(ArtworksAPI::class.java)
     }
 
@@ -37,7 +39,7 @@ object RetrofitModule {
     }
 
     @Provides
-    fun provideCountriesAPI(@Named("countryRetrofit")retrofit: Retrofit): CountriesAPI{
+    fun provideCountriesAPI(@Named("countryRetrofit")retrofit: Retrofit): CountriesAPI {
         return retrofit.create(CountriesAPI::class.java)
     }
 }

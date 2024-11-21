@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragment">
+    tools:context=".fragments.MainFragment">
 
     <Button
         android:id="@+id/searchCountry"
@@ -14,6 +14,7 @@
         android:text="@string/search_country"
         app:layout_constraintBottom_toTopOf="@+id/listCountry"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/artSearchButton"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
@@ -24,6 +25,7 @@
         android:text="@string/list_country"
         android:layout_marginBottom="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchCountry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -35,6 +37,7 @@
         android:text="@string/art_search_button"
         app:layout_constraintBottom_toTopOf="@+id/searchCountry"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/artListButton"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -42,9 +45,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/art_list_button"
+        android:layout_marginTop="210dp"
         app:layout_constraintBottom_toTopOf="@+id/artSearchButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/childFragmentContainer"

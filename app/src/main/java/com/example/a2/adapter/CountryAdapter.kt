@@ -1,9 +1,10 @@
-package com.example.a2
+package com.example.a2.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.a2.data.CountryResponse
 import com.example.a2.databinding.ItemForOneCountryBinding
 
 class CountryAdapter(private val countries: List<CountryResponse>,

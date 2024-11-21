@@ -1,4 +1,4 @@
-package com.example.a2
+package com.example.a2.data
 
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -1,18 +1,22 @@
-package com.example.a2
+package com.example.a2.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.example.a2.CountriesSearchFragment.Companion.COUNTRY_DATA
-import com.example.a2.CountriesSearchFragment.Companion.KEY_FOR_FRAGMENT
+import com.example.a2.data.CountryResponse
 import com.example.a2.databinding.FragmentCountryDetailsBinding
-import kotlinx.serialization.json.Json
+import com.example.a2.fragments.CountriesSearchFragment.Companion.COUNTRY_DATA
+import com.example.a2.fragments.CountriesSearchFragment.Companion.KEY_FOR_FRAGMENT
+import com.example.a2.viewModel.CountryDetailsViewModel
 
 class CountryDetailsFragment : Fragment() {
     private lateinit var bindingFragmentDetails: FragmentCountryDetailsBinding
+    private val countryDetailsViewModel: CountryDetailsViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,15 +27,17 @@ class CountryDetailsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        parentFragmentManager.setFragmentResultListener(KEY_FOR_FRAGMENT, this){ key, bundle->
-            val jsonBundle = bundle.getString(COUNTRY_DATA)
-            jsonBundle?.let {
-                val countryResponse = Json.decodeFromString(CountryResponse.serializer(), jsonBundle)
-                updateUI(countryResponse)
-            }
-        }
+
         bindingFragmentDetails.backToMainFragment.setOnClickListener {
             parentFragmentManager.popBackStack()
+        }
+        countryDetailsViewModel.countryDetailsLiveData.observe(viewLifecycleOwner){country->
+            updateUI(country)
+        }
+        parentFragmentManager.setFragmentResultListener(KEY_FOR_FRAGMENT, this){ key, bundle->
+            bundle.getString(COUNTRY_DATA)?.let {jsonInfoCountry->
+                countryDetailsViewModel.onCountryReceived(jsonInfoCountry)
+            }
         }
     }
     private fun updateUI(country: CountryResponse) = with(bindingFragmentDetails){

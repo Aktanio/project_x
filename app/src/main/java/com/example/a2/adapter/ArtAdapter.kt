@@ -1,11 +1,13 @@
-package com.example.a2
+package com.example.a2.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.a2.RetrofitModule.BASE_URL_FOR_IMAGE
-import com.example.a2.RetrofitModule.IMAGE_SIZE
+import com.example.a2.data.ArtworksResponse
+import com.example.a2.R
+import com.example.a2.di.RetrofitModule.BASE_URL_FOR_IMAGE
+import com.example.a2.di.RetrofitModule.IMAGE_SIZE
 import com.example.a2.databinding.ItemForOneArtBinding
 
 class ArtAdapter(private val artworks: List<ArtworksResponse.Artwork>,
