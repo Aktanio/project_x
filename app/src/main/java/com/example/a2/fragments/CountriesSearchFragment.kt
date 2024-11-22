@@ -6,34 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.a2.R
 import com.example.a2.databinding.FragmentCountriesSearchBinding
-import com.example.a2.di.MyApp
 import com.example.a2.viewModel.CountrySearchViewModel
-import com.example.a2.viewModel.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class CountriesSearchFragment : Fragment() {
     private lateinit var bindingFragmentSearch: FragmentCountriesSearchBinding
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val countrySearchViewModel: CountrySearchViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(CountrySearchViewModel::class.java)
-    }
+    private val countrySearchViewModel: CountrySearchViewModel by viewModels()
 
     companion object {
         const val COUNTRY_DATA = "COUNTRY_DATA"
         const val KEY_FOR_FRAGMENT = "KEY_FOR_FRAGMENT"
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        (requireActivity().application as MyApp).appComponent.injectCountrySearch(this)
     }
 
     override fun onCreateView(

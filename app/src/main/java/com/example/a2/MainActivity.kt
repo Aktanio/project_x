@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.a2.databinding.ActivityMainBinding
 import com.example.a2.fragments.MainFragment
 import com.example.a2.viewModel.MainActivityViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
 @SuppressLint("UseSwitchCompatOrMaterialCode")
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewmodel: MainActivityViewModel by viewModels()

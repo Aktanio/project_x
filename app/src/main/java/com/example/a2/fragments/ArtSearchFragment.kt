@@ -6,34 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.a2.viewModel.ArtSearchViewModel
-import com.example.a2.di.MyApp
 import com.example.a2.R
-import com.example.a2.viewModel.ViewModelFactory
 import com.example.a2.databinding.FragmentArtSearchBinding
+import com.example.a2.viewModel.ArtSearchViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class ArtSearchFragment : Fragment() {
     private lateinit var bindingArtSearch: FragmentArtSearchBinding
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val artSearchViewModel: ArtSearchViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(ArtSearchViewModel::class.java)
-    }
+
+    private val artSearchViewModel: ArtSearchViewModel by viewModels()
 
     companion object {
         const val ART_DATA = "ART_DATA"
         const val ART_KEY_FOR_FRAGMENT = "ART_KEY_FOR_FRAGMENT"
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        (requireActivity().application as MyApp).appComponent.injectArtSearch(this)
     }
 
     override fun onCreateView(

@@ -1,5 +1,9 @@
 [versions]
 agp = "8.6.0"
+dagger = "2.52"
+daggerCompiler = "2.52"
+hiltAndroid = "2.51.1"
+hiltAndroidCompiler = "2.51.1"
 kotlin = "1.9.0"
 coreKtx = "1.10.1"
 junit = "4.13.2"
@@ -12,6 +16,10 @@ constraintlayout = "2.1.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+google-dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "daggerCompiler" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -24,4 +32,5 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version = "1.9.0" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid"}
 

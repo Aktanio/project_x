@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlinx.serialization)
     id("kotlin-kapt")
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -51,12 +52,14 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-    implementation("com.google.dagger:dagger:2.52")
-    kapt("com.google.dagger:dagger-compiler:2.52")
+    implementation(libs.dagger)
+    kapt(libs.google.dagger.compiler)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
-    implementation("androidx.fragment:fragment-ktx:1.8.3")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
+    implementation("androidx.fragment:fragment-ktx:1.8.5")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
