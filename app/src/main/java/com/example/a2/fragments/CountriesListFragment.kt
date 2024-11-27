@@ -5,33 +5,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.a2.adapter.CountryAdapter
-import com.example.a2.viewModel.CountryListViewModel
-import com.example.a2.data.CountryResponse
-import com.example.a2.di.MyApp
 import com.example.a2.R
-import com.example.a2.viewModel.ViewModelFactory
+import com.example.a2.adapter.CountryAdapter
+import com.example.a2.data.CountryResponse
+import com.example.a2.databinding.FragmentCountriesListBinding
 import com.example.a2.fragments.CountriesSearchFragment.Companion.COUNTRY_DATA
 import com.example.a2.fragments.CountriesSearchFragment.Companion.KEY_FOR_FRAGMENT
-import com.example.a2.databinding.FragmentCountriesListBinding
-import kotlinx.serialization.builtins.ListSerializer
+import com.example.a2.viewModel.CountryListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.json.Json
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class CountriesListFragment : Fragment() {
     private lateinit var bindingFragmentList: FragmentCountriesListBinding
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val listCountryViewModel: CountryListViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(CountryListViewModel::class.java)
-    }
+    private val listCountryViewModel: CountryListViewModel by viewModels()
+    private val countryAdapter by lazy {
+        CountryAdapter{selectedMeal->
+            val jsonInfoCountry = Json.encodeToString(CountryResponse.serializer(),selectedMeal)
+            val selectedCountryBundle = Bundle().apply {
+                putString(COUNTRY_DATA, jsonInfoCountry)
+            }
+            childFragmentManager.setFragmentResult(KEY_FOR_FRAGMENT, selectedCountryBundle)
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        (requireActivity().application as MyApp).appComponent.injectCountryList(this)
+            childFragmentManager.beginTransaction()
+                .replace(R.id.detailsContainerInList, CountryDetailsFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     override fun onCreateView(
@@ -46,19 +48,9 @@ class CountriesListFragment : Fragment() {
         bindingFragmentList.backToMainFragment.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
+        bindingFragmentList.forAllCountry.adapter = countryAdapter
         listCountryViewModel.countriesLiveData.observe(viewLifecycleOwner){countryResponse->
-            bindingFragmentList.forAllCountry.adapter = CountryAdapter(countryResponse){selectedMeal->
-                val jsonInfoCountry = Json.encodeToString(CountryResponse.serializer(),selectedMeal)
-                val selectedCountryBundle = Bundle().apply {
-                    putString(COUNTRY_DATA, jsonInfoCountry)
-                }
-                childFragmentManager.setFragmentResult(KEY_FOR_FRAGMENT, selectedCountryBundle)
-
-                childFragmentManager.beginTransaction()
-                    .replace(R.id.detailsContainerInList, CountryDetailsFragment())
-                    .addToBackStack(null)
-                    .commit()
-            }
+            countryAdapter.updateData(countryResponse)
         }
         bindingFragmentList.forAllCountry.layoutManager = LinearLayoutManager(context)
         listCountryViewModel.requestAllCountries()

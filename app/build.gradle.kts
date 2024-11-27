@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlinx.serialization)
     id("kotlin-kapt")
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -50,21 +51,21 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
-    implementation("com.google.dagger:dagger:2.52")
-    kapt("com.google.dagger:dagger-compiler:2.52")
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.dagger)
+    kapt(libs.google.dagger.compiler)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
-    implementation("androidx.fragment:fragment-ktx:1.8.3")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
-    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
+    implementation(libs.androidx.fragment.ktx)
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
 
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation (libs.glide)
 
-    implementation("com.squareup.okhttp3:logging-interceptor:4.7.2")
-    implementation("com.squareup.okhttp3:okhttp:4.7.2")
-
-    implementation("com.squareup.picasso:picasso:2.8")
+    implementation(libs.logging.interceptor)
+    implementation(libs.okhttp)
 
 }

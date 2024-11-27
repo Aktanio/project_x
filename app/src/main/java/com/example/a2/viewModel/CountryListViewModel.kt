@@ -6,11 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.a2.repository.CountryRepository
 import com.example.a2.data.CountryResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@HiltViewModel
 class CountryListViewModel @Inject constructor(
     private val countryRepository: CountryRepository
 ): ViewModel() {

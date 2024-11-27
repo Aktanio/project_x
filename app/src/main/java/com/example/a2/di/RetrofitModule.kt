@@ -4,11 +4,14 @@ import com.example.a2.data.ArtworksAPI
 import com.example.a2.data.CountriesAPI
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 
 @Module
+@InstallIn(SingletonComponent::class)
 object RetrofitModule {
     private const val COUNTRY_BASE_URL = "https://restcountries.com/"
     private const val ART_BASE_URL = "https://api.artic.edu/"
