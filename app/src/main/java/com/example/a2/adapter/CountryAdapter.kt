@@ -3,14 +3,32 @@ package com.example.a2.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.a2.data.CountryResponse
 import com.example.a2.databinding.ItemForOneCountryBinding
 
-class CountryAdapter(private val itemClick: (CountryResponse) -> Unit): RecyclerView.Adapter<CountryAdapter.MyViewHolder>() {
+class CountryAdapter(private val itemClick: (CountryResponse) -> Unit):
+    ListAdapter<CountryResponse, CountryAdapter.MyViewHolder>(CountryDiffCallback) {
 
-    private var countries: List<CountryResponse> = emptyList()
+    object CountryDiffCallback: DiffUtil.ItemCallback<CountryResponse>() {
+        override fun areItemsTheSame(
+            oldItem: CountryResponse,
+            newItem: CountryResponse
+        ): Boolean {
+            return oldItem.name.common == newItem.name.common
+        }
+
+        override fun areContentsTheSame(
+            oldItem: CountryResponse,
+            newItem: CountryResponse
+        ): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+
 
     inner class MyViewHolder(private val bindingItem: ItemForOneCountryBinding): RecyclerView.ViewHolder(bindingItem.root){
         fun bind(country: CountryResponse){
@@ -29,23 +47,7 @@ class CountryAdapter(private val itemClick: (CountryResponse) -> Unit): Recycler
         return MyViewHolder(ItemForOneCountryBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    override fun getItemCount(): Int {
-        return countries.size
-    }
-
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(countries[position])
-    }
-
-    fun updateData(newCountries: List<CountryResponse>){
-        val diffCallback = GenericDiffUtil(
-            oldList = countries,
-            newList = newCountries,
-            areItemsTheSame = {oldItem, newItem -> oldItem.name.common == newItem.name.common},
-            areContentsTheSame = {oldItem, newItem -> oldItem == newItem}
-        )
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        countries = newCountries
-        diffResult.dispatchUpdatesTo(this)
+        holder.bind(getItem(position))
     }
 }

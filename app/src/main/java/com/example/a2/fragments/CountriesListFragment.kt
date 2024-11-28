@@ -50,7 +50,7 @@ class CountriesListFragment : Fragment() {
         }
         bindingFragmentList.forAllCountry.adapter = countryAdapter
         listCountryViewModel.countriesLiveData.observe(viewLifecycleOwner){countryResponse->
-            countryAdapter.updateData(countryResponse)
+            countryAdapter.submitList(countryResponse)
         }
         bindingFragmentList.forAllCountry.layoutManager = LinearLayoutManager(context)
         listCountryViewModel.requestAllCountries()

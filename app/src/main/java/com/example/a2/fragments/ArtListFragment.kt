@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a2.R
 import com.example.a2.adapter.ArtAdapter
@@ -15,6 +16,8 @@ import com.example.a2.fragments.ArtSearchFragment.Companion.ART_DATA
 import com.example.a2.fragments.ArtSearchFragment.Companion.ART_KEY_FOR_FRAGMENT
 import com.example.a2.viewModel.ArtListViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 
 @AndroidEntryPoint
@@ -49,10 +52,11 @@ class ArtListFragment : Fragment() {
             parentFragmentManager.popBackStack()
         }
         bindingArtList.rvForArtItem.adapter = artAdapter
-        artListViewModel.artListLiveData.observe(viewLifecycleOwner){artResponse->
-            artAdapter.updateData(artResponse)
+        lifecycleScope.launch {
+            artListViewModel.pagerArtworks.collectLatest { pagingData->
+                artAdapter.submitData(pagingData)
+            }
         }
         bindingArtList.rvForArtItem.layoutManager = LinearLayoutManager(context)
-        artListViewModel.requestAllArtworks()
     }
 }
