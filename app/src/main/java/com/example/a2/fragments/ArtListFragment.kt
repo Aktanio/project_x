@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.a2.R
 import com.example.a2.adapter.ArtAdapter
 import com.example.a2.data.ArtworksResponse
@@ -16,8 +16,6 @@ import com.example.a2.fragments.ArtSearchFragment.Companion.ART_DATA
 import com.example.a2.fragments.ArtSearchFragment.Companion.ART_KEY_FOR_FRAGMENT
 import com.example.a2.viewModel.ArtListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 
 @AndroidEntryPoint
@@ -51,12 +49,29 @@ class ArtListFragment : Fragment() {
         bindingArtList.ivBackToMainFragment.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
-        bindingArtList.rvForArtItem.adapter = artAdapter
-        lifecycleScope.launch {
-            artListViewModel.pagerArtworks.collectLatest { pagingData->
-                artAdapter.submitData(pagingData)
+
+        bindingArtList.rvForArtItem.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
+
+                if ((visibleItemCount + firstVisibleItem) >= totalItemCount && firstVisibleItem >= 0){
+                    artListViewModel.loadNextPage()
+                }
             }
+        })
+
+        bindingArtList.rvForArtItem.adapter = artAdapter
+        artListViewModel.artListLiveData.observe(viewLifecycleOwner){artworks->
+            artAdapter.submitList(artworks)
         }
         bindingArtList.rvForArtItem.layoutManager = LinearLayoutManager(context)
+
+        artListViewModel.loadArtworks()
     }
 }
