@@ -61,7 +61,7 @@ class ArtListFragment : Fragment() {
                 val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
 
                 if ((visibleItemCount + firstVisibleItem) >= totalItemCount && firstVisibleItem >= 0){
-                    artListViewModel.loadNextPage()
+                    artListViewModel.onPageFinished()
                 }
             }
         })

@@ -56,7 +56,6 @@ dependencies {
     kapt(libs.google.dagger.compiler)
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
-    implementation(libs.androidx.paging.runtime.ktx)
 
     implementation(libs.androidx.fragment.ktx)
     implementation (libs.androidx.lifecycle.viewmodel.ktx)

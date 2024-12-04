@@ -23,8 +23,11 @@ class ArtListViewModel @Inject constructor(
     private var isLoading = false
 
     fun loadArtworks(page: Int = 1) = viewModelScope.launch {
-        if(isLoading) return@launch
-            isLoading = true
+
+        if(isLoading) {
+            return@launch
+        }
+        isLoading = true
 
         val newArtworks = withContext(Dispatchers.IO){
             artRepository.getAllArtworks(page)
@@ -33,7 +36,8 @@ class ArtListViewModel @Inject constructor(
         _artListLiveData.value = currentList + newArtworks
         isLoading = false
         }
-    fun loadNextPage(){
+
+    fun onPageFinished(){
         loadArtworks(++currentPage)
     }
 }
