@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.a2.repository.ArtRepository
 import com.example.a2.data.ArtworksResponse
+import com.example.a2.repository.ArtRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,10 +19,25 @@ class ArtListViewModel @Inject constructor(
     private val _artListLiveData = MutableLiveData<List<ArtworksResponse.Artwork>>()
     val artListLiveData: LiveData<List<ArtworksResponse.Artwork>> = _artListLiveData
 
-    fun requestAllArtworks(page: Int = 1) = viewModelScope.launch{
-        val allArtworks = withContext(Dispatchers.IO){
+    private var currentPage = 1
+    private var isLoading = false
+
+    fun loadArtworks(page: Int = 1) = viewModelScope.launch {
+
+        if(isLoading) {
+            return@launch
+        }
+        isLoading = true
+
+        val newArtworks = withContext(Dispatchers.IO){
             artRepository.getAllArtworks(page)
         }
-        _artListLiveData.value = allArtworks
+        val currentList = _artListLiveData.value.orEmpty()
+        _artListLiveData.value = currentList + newArtworks
+        isLoading = false
+        }
+
+    fun onPageFinished(){
+        loadArtworks(++currentPage)
     }
 }

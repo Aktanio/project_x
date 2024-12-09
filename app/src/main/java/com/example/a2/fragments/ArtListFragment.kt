@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.a2.R
 import com.example.a2.adapter.ArtAdapter
 import com.example.a2.data.ArtworksResponse
@@ -48,11 +49,29 @@ class ArtListFragment : Fragment() {
         bindingArtList.ivBackToMainFragment.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
+
+        bindingArtList.rvForArtItem.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItem = layoutManager.findFirstVisibleItemPosition()
+
+                if ((visibleItemCount + firstVisibleItem) >= totalItemCount && firstVisibleItem >= 0){
+                    artListViewModel.onPageFinished()
+                }
+            }
+        })
+
         bindingArtList.rvForArtItem.adapter = artAdapter
-        artListViewModel.artListLiveData.observe(viewLifecycleOwner){artResponse->
-            artAdapter.updateData(artResponse)
+        artListViewModel.artListLiveData.observe(viewLifecycleOwner){artworks->
+            artAdapter.submitList(artworks)
         }
         bindingArtList.rvForArtItem.layoutManager = LinearLayoutManager(context)
-        artListViewModel.requestAllArtworks()
+
+        artListViewModel.loadArtworks()
     }
 }

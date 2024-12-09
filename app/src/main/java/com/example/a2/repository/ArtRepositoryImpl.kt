@@ -8,7 +8,7 @@ class ArtRepositoryImpl @Inject constructor(
     private val artworksAPI: ArtworksAPI
 ): ArtRepository {
     override suspend fun getAllArtworks(page: Int): List<ArtworksResponse.Artwork> {
-        return artworksAPI.getAllArtworks().data
+        return artworksAPI.getAllArtworks(page).data
     }
 
     override suspend fun getArtByName(artName: String): ArtworksResponse.Artwork {

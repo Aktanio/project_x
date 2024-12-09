@@ -3,6 +3,7 @@ package com.example.a2.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.a2.R
@@ -11,9 +12,25 @@ import com.example.a2.databinding.ItemForOneArtBinding
 import com.example.a2.di.RetrofitModule.BASE_URL_FOR_IMAGE
 import com.example.a2.di.RetrofitModule.IMAGE_SIZE
 
-class ArtAdapter(private val itemClick: (ArtworksResponse.Artwork)-> Unit): RecyclerView.Adapter<ArtAdapter.ViewHolder>() {
+class ArtAdapter(private val itemClick: (ArtworksResponse.Artwork)-> Unit):
+    ListAdapter<ArtworksResponse.Artwork, ArtAdapter.ViewHolder>(ArtDiffCallback) {
 
-    private var artworks: List<ArtworksResponse.Artwork> = emptyList()
+    object ArtDiffCallback: DiffUtil.ItemCallback<ArtworksResponse.Artwork>() {
+        override fun areItemsTheSame(
+            oldItem: ArtworksResponse.Artwork,
+            newItem: ArtworksResponse.Artwork
+        ): Boolean {
+            return oldItem.image_id == newItem.image_id
+        }
+
+        override fun areContentsTheSame(
+            oldItem: ArtworksResponse.Artwork,
+            newItem: ArtworksResponse.Artwork
+        ): Boolean {
+            return oldItem == newItem
+        }
+
+    }
 
     inner class ViewHolder(private val bindingItem: ItemForOneArtBinding): RecyclerView.ViewHolder(bindingItem.root){
         fun bind(art: ArtworksResponse.Artwork) = with(bindingItem){
@@ -33,23 +50,7 @@ class ArtAdapter(private val itemClick: (ArtworksResponse.Artwork)-> Unit): Recy
         return ViewHolder(ItemForOneArtBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    override fun getItemCount(): Int {
-        return artworks.size
-    }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(artworks[position])
-    }
-
-    fun updateData(newArt: List<ArtworksResponse.Artwork>){
-        val diffCallback = GenericDiffUtil(
-            oldList = artworks,
-            newList = newArt,
-            areItemsTheSame = {oldItem, newItem -> oldItem.title == newItem.title },
-            areContentsTheSame = {oldItem, newItem -> oldItem == newItem}
-        )
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        artworks = newArt
-        diffResult.dispatchUpdatesTo(this)
+        holder.bind(getItem(position))
     }
 }

@@ -10,5 +10,5 @@ interface ArtworksAPI {
                                  "title, image_id, artist_display, date_display, style_title"): ArtworksResponse
 
     @GET("api/v1/artworks")
-    suspend fun getAllArtworks(@Query("page") page: Int = 1): ArtworksResponse
+    suspend fun getAllArtworks(@Query("page") page: Int): ArtworksResponse
 }
