@@ -1,6 +1,7 @@
 package com.example.a2.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,6 +69,7 @@ class ArtListFragment : Fragment() {
 
         bindingArtList.rvForArtItem.adapter = artAdapter
         artListViewModel.artListLiveData.observe(viewLifecycleOwner){artworks->
+            Log.d("art", "${artworks.size}")
             artAdapter.submitList(artworks)
         }
         bindingArtList.rvForArtItem.layoutManager = LinearLayoutManager(context)

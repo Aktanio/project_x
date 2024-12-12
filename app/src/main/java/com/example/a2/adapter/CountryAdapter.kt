@@ -17,7 +17,7 @@ class CountryAdapter(private val itemClick: (CountryResponse) -> Unit):
             oldItem: CountryResponse,
             newItem: CountryResponse
         ): Boolean {
-            return oldItem.name.common == newItem.name.common
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(

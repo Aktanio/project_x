@@ -20,7 +20,7 @@ class ArtAdapter(private val itemClick: (ArtworksResponse.Artwork)-> Unit):
             oldItem: ArtworksResponse.Artwork,
             newItem: ArtworksResponse.Artwork
         ): Boolean {
-            return oldItem.image_id == newItem.image_id
+            return oldItem.title == newItem.title
         }
 
         override fun areContentsTheSame(

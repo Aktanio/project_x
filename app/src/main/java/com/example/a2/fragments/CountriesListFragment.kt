@@ -1,6 +1,7 @@
 package com.example.a2.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,6 +51,7 @@ class CountriesListFragment : Fragment() {
         }
         bindingFragmentList.forAllCountry.adapter = countryAdapter
         listCountryViewModel.countriesLiveData.observe(viewLifecycleOwner){countryResponse->
+            Log.d("country", "${countryResponse.size}")
             countryAdapter.submitList(countryResponse)
         }
         bindingFragmentList.forAllCountry.layoutManager = LinearLayoutManager(context)
