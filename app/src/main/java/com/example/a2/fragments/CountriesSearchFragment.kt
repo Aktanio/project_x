@@ -52,6 +52,14 @@ class CountriesSearchFragment : Fragment() {
             }
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                countrySearchViewModel.errorSharedFlow.collect{ errorMessage->
+                    Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
         bindingFragmentSearch.backToMainFragmentFromSearch.setOnClickListener {
             parentFragmentManager.popBackStack()
         }

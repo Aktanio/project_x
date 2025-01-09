@@ -4,18 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import com.example.a2.data.CountryEntity
+import com.example.a2.data.ArtworkDBEntity
+import com.example.a2.data.CountryDBEntity
 
-@Database(entities = [CountryEntity::class], version = 1, exportSchema = false)
-@TypeConverters(Converters::class)
-abstract class CountriesDatabase: RoomDatabase() {
+@Database(entities = [ArtworkDBEntity::class, CountryDBEntity::class], version = 3)
+abstract class AppDatabase: RoomDatabase() {
 
-    abstract fun getCountriesDao(): CountriesDao
+    abstract fun getArtworksDao(): ArtworksDao
+    abstract fun getCountryDao(): CountriesDao
 
     companion object{
         @Volatile
-        private var INSTANCE: CountriesDatabase? = null
+        private var INSTANCE: AppDatabase? = null
         private val LOCK = Any()
 
         operator fun invoke(context: Context) = INSTANCE ?: synchronized(LOCK){
@@ -27,8 +27,9 @@ abstract class CountriesDatabase: RoomDatabase() {
         private fun createDatabase(context: Context) =
             Room.databaseBuilder(
                 context.applicationContext,
-                CountriesDatabase::class.java,
-                "countries_db"
-            ).build()
+                AppDatabase::class.java,
+                "main_db"
+            ).fallbackToDestructiveMigration()
+                .build()
     }
 }

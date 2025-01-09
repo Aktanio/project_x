@@ -6,23 +6,23 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.a2.data.CountryResponse
+import com.example.a2.data.CountryEntity
 import com.example.a2.databinding.ItemForOneCountryBinding
 
-class CountryAdapter(private val itemClick: (CountryResponse) -> Unit):
-    ListAdapter<CountryResponse, CountryAdapter.MyViewHolder>(CountryDiffCallback) {
+class CountryAdapter(private val itemClick: (CountryEntity) -> Unit):
+    ListAdapter<CountryEntity, CountryAdapter.MyViewHolder>(CountryDiffCallback) {
 
-    object CountryDiffCallback: DiffUtil.ItemCallback<CountryResponse>() {
+    object CountryDiffCallback: DiffUtil.ItemCallback<CountryEntity>() {
         override fun areItemsTheSame(
-            oldItem: CountryResponse,
-            newItem: CountryResponse
+            oldItem: CountryEntity,
+            newItem: CountryEntity
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: CountryResponse,
-            newItem: CountryResponse
+            oldItem: CountryEntity,
+            newItem: CountryEntity
         ): Boolean {
             return oldItem == newItem
         }
@@ -31,11 +31,11 @@ class CountryAdapter(private val itemClick: (CountryResponse) -> Unit):
 
 
     inner class MyViewHolder(private val bindingItem: ItemForOneCountryBinding): RecyclerView.ViewHolder(bindingItem.root){
-        fun bind(country: CountryResponse){
-            bindingItem.theCountry.text = country.name.common
-            bindingItem.theCapital.text = country.capital?.joinToString(", ")
+        fun bind(country: CountryEntity){
+            bindingItem.theCountry.text = country.commonName
+            bindingItem.theCapital.text = country.capital
             Glide.with(bindingItem.forCountryFlag)
-                .load(country.flags.png)
+                .load(country.flagsPng)
                 .into(bindingItem.forCountryFlag)
             bindingItem.root.setOnClickListener{
                 itemClick(country)

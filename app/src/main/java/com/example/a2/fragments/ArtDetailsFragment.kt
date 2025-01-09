@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.a2.R
-import com.example.a2.data.ArtworksResponse
+import com.example.a2.data.ArtworkEntity
 import com.example.a2.databinding.FragmentArtDetailsBinding
 import com.example.a2.di.RetrofitModule.BASE_URL_FOR_IMAGE
 import com.example.a2.di.RetrofitModule.IMAGE_SIZE
@@ -42,13 +42,13 @@ class ArtDetailsFragment : Fragment() {
         }
     }
 
-    private fun showInfoArt(art: ArtworksResponse.Artwork) = with(bindingArtDetails) {
-        tvArtName.text = art.title
-        tvAboutArtist.text = art.artist_display
-        tvStyleArt.text = art.style_title
-        tvYearTheCreation.text = art.date_display
+    private fun showInfoArt(art: ArtworkEntity) = with(bindingArtDetails) {
+        tvArtName.text = art.titleArt
+        tvAboutArtist.text = art.artist_artDisplay
+        tvStyleArt.text = art.style_artTitle
+        tvYearTheCreation.text = art.date_artDisplay
         Glide.with(this@ArtDetailsFragment)
-            .load("$BASE_URL_FOR_IMAGE${art.image_id}$IMAGE_SIZE")
+            .load("$BASE_URL_FOR_IMAGE${art.imageArt_id}$IMAGE_SIZE")
             .placeholder(R.drawable.default_image)
             .into(ivArt)
     }

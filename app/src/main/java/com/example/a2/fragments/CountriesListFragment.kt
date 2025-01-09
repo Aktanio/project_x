@@ -1,7 +1,6 @@
 package com.example.a2.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a2.R
 import com.example.a2.adapter.CountryAdapter
-import com.example.a2.data.CountryResponse
+import com.example.a2.data.CountryEntity
 import com.example.a2.databinding.FragmentCountriesListBinding
 import com.example.a2.fragments.CountriesSearchFragment.Companion.COUNTRY_DATA
 import com.example.a2.fragments.CountriesSearchFragment.Companion.KEY_FOR_FRAGMENT
@@ -24,7 +23,7 @@ class CountriesListFragment : Fragment() {
     private val listCountryViewModel: CountryListViewModel by viewModels()
     private val countryAdapter by lazy {
         CountryAdapter{selectedMeal->
-            val jsonInfoCountry = Json.encodeToString(CountryResponse.serializer(),selectedMeal)
+            val jsonInfoCountry = Json.encodeToString(CountryEntity.serializer(),selectedMeal)
             val selectedCountryBundle = Bundle().apply {
                 putString(COUNTRY_DATA, jsonInfoCountry)
             }
@@ -51,7 +50,6 @@ class CountriesListFragment : Fragment() {
         }
         bindingFragmentList.forAllCountry.adapter = countryAdapter
         listCountryViewModel.countriesLiveData.observe(viewLifecycleOwner){countryResponse->
-            Log.d("country", "${countryResponse.size}")
             countryAdapter.submitList(countryResponse)
         }
         bindingFragmentList.forAllCountry.layoutManager = LinearLayoutManager(context)

@@ -1,7 +1,6 @@
 package com.example.a2.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.a2.R
 import com.example.a2.adapter.ArtAdapter
-import com.example.a2.data.ArtworksResponse
+import com.example.a2.data.ArtworkEntity
 import com.example.a2.databinding.FragmentArtListBinding
 import com.example.a2.fragments.ArtSearchFragment.Companion.ART_DATA
 import com.example.a2.fragments.ArtSearchFragment.Companion.ART_KEY_FOR_FRAGMENT
@@ -25,7 +24,7 @@ class ArtListFragment : Fragment() {
     private val artListViewModel: ArtListViewModel by viewModels()
     private val artAdapter by lazy {
         ArtAdapter{selectedArt->
-            val jsonInfoArt = Json.encodeToString(ArtworksResponse.Artwork.serializer(), selectedArt)
+            val jsonInfoArt = Json.encodeToString(ArtworkEntity.serializer(), selectedArt)
             val artBundle = Bundle().apply {
                 putString(ART_DATA, jsonInfoArt)
             }
@@ -69,7 +68,6 @@ class ArtListFragment : Fragment() {
 
         bindingArtList.rvForArtItem.adapter = artAdapter
         artListViewModel.artListLiveData.observe(viewLifecycleOwner){artworks->
-            Log.d("art", "${artworks.size}")
             artAdapter.submitList(artworks)
         }
         bindingArtList.rvForArtItem.layoutManager = LinearLayoutManager(context)

@@ -1,11 +1,8 @@
 package com.example.a2.repository
 
-import com.example.a2.data.ArtworkEntity
-import com.example.a2.data.ArtworksResponse
-
-interface ArtRepository {
-     suspend fun getAllArtworks(page: Int): List<ArtworksResponse.Artwork>
-     suspend fun getArtByName(artName: String): ArtworksResponse.Artwork
-     suspend fun getCachedArtworks(): List<ArtworkEntity>
-     suspend fun insertAllArtworks(artworks: List<ArtworkEntity>)
+interface ArtRepository<T> {
+     suspend fun getAllArtworks(page: Int): List<T>
+     suspend fun getArtByName(artName: String): T
+     suspend fun getCachedArtworks(): List<T>
+     suspend fun insertAllArtworks(artworks: List<T>)
 }

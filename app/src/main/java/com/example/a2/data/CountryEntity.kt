@@ -1,13 +1,9 @@
 package com.example.a2.data
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-@Entity(tableName = "countries")
-data class CountryEntity (
-    @PrimaryKey(autoGenerate = true)
+data class CountryEntity(
     val id: Int,
     val commonName: String,
     val officialName: String,
@@ -24,3 +20,66 @@ data class CountryEntity (
     val carSigns: String,
     val carSide: String
 )
+
+fun CountryResponse.toCountryEntity() = CountryEntity(
+    id = this.id,
+    commonName = this.name.common,
+    officialName = this.name.official,
+    nativeName = this.name.nativeName.toString(),
+    capital = this.capital?.joinToString(", "),
+    flagsPng = this.flags.png,
+    region = this.region,
+    population = this.population,
+    area = this.area,
+    continents = this.continents.joinToString(" "),
+    languages = this.languages.toString(),
+    subregion = this.subregion,
+    currencies = this.currencies.toString(),
+    carSigns = this.car.signs?.joinToString(" ").toString(),
+    carSide = this.car.side
+)
+fun List<CountryResponse>.toCountryEntityResponseList() = this.map {
+    it.toCountryEntity()
+}
+
+fun CountryEntity.toCountryDBEntity() = CountryDBEntity(
+    id = this.id,
+    commonName = this.commonName,
+    officialName = this.officialName,
+    nativeName = this.nativeName,
+    capital = this.capital,
+    flagsPng = this.flagsPng,
+    region = this.region,
+    population = this.population,
+    area = this.area,
+    continents = this.continents,
+    languages = this.languages,
+    subregion = this.subregion,
+    currencies = this.currencies,
+    carSigns = this.carSigns,
+    carSide = this.carSide
+)
+fun List<CountryEntity>.toCountryDBList() = this.map {
+    it.toCountryDBEntity()
+}
+
+fun CountryDBEntity.toCountryEntity() = CountryEntity(
+    id = this.id,
+    commonName = this.commonName,
+    officialName = this.officialName,
+    nativeName = this.nativeName,
+    capital = this.capital,
+    flagsPng = this.flagsPng,
+    region = this.region,
+    population = this.population,
+    area = this.area,
+    continents = this.continents,
+    languages = this.languages,
+    subregion = this.subregion,
+    currencies = this.currencies,
+    carSigns = this.carSigns,
+    carSide = this.carSide
+)
+fun List<CountryDBEntity>.toCountryEntityDatabaseList() = this.map {
+    it.toCountryEntity()
+}

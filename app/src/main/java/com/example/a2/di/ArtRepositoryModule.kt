@@ -1,5 +1,6 @@
 package com.example.a2.di
 
+import com.example.a2.data.ArtworkEntity
 import com.example.a2.repository.ArtRepository
 import com.example.a2.repository.ArtRepositoryImpl
 import dagger.Binds
@@ -13,5 +14,5 @@ import dagger.hilt.components.SingletonComponent
      @Binds
      abstract fun bindArtRepository(
          artRepositoryImpl: ArtRepositoryImpl
-     ): ArtRepository
+     ): ArtRepository<ArtworkEntity>
 }

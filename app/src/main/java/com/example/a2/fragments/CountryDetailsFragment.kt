@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.example.a2.data.CountryResponse
+import com.example.a2.data.CountryEntity
 import com.example.a2.databinding.FragmentCountryDetailsBinding
 import com.example.a2.fragments.CountriesSearchFragment.Companion.COUNTRY_DATA
 import com.example.a2.fragments.CountriesSearchFragment.Companion.KEY_FOR_FRAGMENT
@@ -40,22 +40,22 @@ class CountryDetailsFragment : Fragment() {
             }
         }
     }
-    private fun updateUI(country: CountryResponse) = with(bindingFragmentDetails){
+    private fun updateUI(country: CountryEntity) = with(bindingFragmentDetails){
         subregion.text = country.subregion
-        currencies.text = country.currencies?.values?.firstOrNull()?.name
-        countryName.text = country.name.common
-        capital.text = country.capital?.joinToString(", ")
+        currencies.text = country.currencies
+        countryName.text = country.commonName
+        capital.text = country.capital
         regionOfTheCountry.text = country.region
         populationOfTheCountry.text = country.population.toString()
-        continentsOfTheCountry.text = country.continents[0]
-        languagesOfTheCountry.text = country.languages?.values?.firstOrNull()
-        signsCars.text = country.car.signs[0]
-        sideCars.text = country.car.side
-        officialName.text = country.name.nativeName?.values?.firstOrNull()?.official
-        officialNameEng.text = country.name.official
+        continentsOfTheCountry.text = country.continents
+        languagesOfTheCountry.text = country.languages
+        signsCars.text = country.carSigns
+        sideCars.text = country.carSide
+        officialName.text = country.nativeName
+        officialNameEng.text = country.officialName
         areaOfTheCountry.text = country.area.toString()
         Glide.with(this@CountryDetailsFragment)
-            .load(country.flags.png)
+            .load(country.flagsPng)
             .into(countryFlag)
     }
 }
