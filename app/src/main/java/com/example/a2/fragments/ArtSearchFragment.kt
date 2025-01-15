@@ -55,8 +55,8 @@ class ArtSearchFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                artSearchViewModel.errorSharedFlow.collect{ errorMessage->
-                    Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+                artSearchViewModel.errorSharedFlow.collect{ error->
+                    Toast.makeText(context, R.string.errorMessage, Toast.LENGTH_LONG).show()
                 }
             }
         }

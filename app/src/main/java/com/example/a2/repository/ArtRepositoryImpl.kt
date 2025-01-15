@@ -16,12 +16,8 @@ class ArtRepositoryImpl @Inject constructor(
     private val artworksDao: ArtworksDao
 ): ArtRepository<ArtworkEntity> {
     override suspend fun getAllArtworks(page: Int): List<ArtworkEntity> {
-        return try {
-            withContext(Dispatchers.IO){
-                artworksAPI.getAllArtworks(page).data.toArtworkEntityResponseList()
-            }
-        } catch (e: Exception){
-            getCachedArtworks()
+        return withContext(Dispatchers.IO){
+            artworksAPI.getAllArtworks(page).data.toArtworkEntityResponseList()
         }
     }
 

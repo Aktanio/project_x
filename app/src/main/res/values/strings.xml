@@ -44,4 +44,6 @@
     <string name="style">TextView</string>
     <string name="title">TextView</string>
     <string name="year_the_painting">Год создания картины:</string>
+    <string name="errorMessage">Нет подключение к интернету. Проверьте соединение.</string>
+    <string name="errorMessageInList">Для загрузки подключитесь к интернету.</string>
 </resources>

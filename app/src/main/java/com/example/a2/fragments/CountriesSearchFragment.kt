@@ -54,8 +54,8 @@ class CountriesSearchFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                countrySearchViewModel.errorSharedFlow.collect{ errorMessage->
-                    Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+                countrySearchViewModel.errorSharedFlow.collect{ error->
+                    Toast.makeText(context, R.string.errorMessage, Toast.LENGTH_LONG).show()
                 }
             }
         }
