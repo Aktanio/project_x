@@ -23,7 +23,7 @@ class ArtListViewModel @Inject constructor(
 
     private var currentPage = 1
     private var isLoading = false
-    private var isUsingCache = true
+    private var isFirstLoadFromCache = true
 
     init {
         loadCachedArtworks()
@@ -37,21 +37,24 @@ class ArtListViewModel @Inject constructor(
         isLoading = true
 
         try {
-            if (isUsingCache){
+            if (isFirstLoadFromCache){
                 val cachedArtworks = artRepository.getCachedArtworks()
                 if (cachedArtworks.isNotEmpty()){
                     _artListLiveData.value = cachedArtworks
                     currentPage = calculateLastPage(cachedArtworks.size)
-                    isUsingCache = false
-                    isLoading = false
-                    return@launch
+                    isFirstLoadFromCache = false
+                } else{
+                    isFirstLoadFromCache = false
                 }
             }
-            val newArtworks = artRepository.getAllArtworks(page)
-            saveArtworksToDatabase(newArtworks)
+            if (!isFirstLoadFromCache){
 
-            val currentList = _artListLiveData.value.orEmpty()
-            _artListLiveData.value = currentList + newArtworks
+                val newArtworks = artRepository.getAllArtworks(page)
+                saveArtworksToDatabase(newArtworks)
+
+                val currentList = _artListLiveData.value.orEmpty()
+                _artListLiveData.value = currentList + newArtworks
+            }
 
         }catch (e: Exception){
             if (artRepository.getCachedArtworks().isEmpty()){
@@ -63,7 +66,7 @@ class ArtListViewModel @Inject constructor(
     }
 
     fun onPageFinished(){
-        if (!isUsingCache){
+        if (!isFirstLoadFromCache){
             loadArtworks(++currentPage)
         }
     }
