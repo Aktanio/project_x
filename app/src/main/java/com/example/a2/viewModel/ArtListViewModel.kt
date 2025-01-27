@@ -47,14 +47,13 @@ class ArtListViewModel @Inject constructor(
                     isFirstLoadFromCache = false
                 }
             }
-            if (!isFirstLoadFromCache){
 
-                val newArtworks = artRepository.getAllArtworks(page)
-                saveArtworksToDatabase(newArtworks)
+            val newArtworks = artRepository.getAllArtworks(page)
+            saveArtworksToDatabase(newArtworks)
 
-                val currentList = _artListLiveData.value.orEmpty()
-                _artListLiveData.value = currentList + newArtworks
-            }
+            val currentList = _artListLiveData.value.orEmpty()
+            _artListLiveData.value = currentList + newArtworks
+
 
         }catch (e: Exception){
             if (artRepository.getCachedArtworks().isEmpty()){
