@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.a2.R
 import com.example.a2.adapter.ArtAdapter
 import com.example.a2.data.ArtworkEntity
+import com.example.a2.data.db.AppError
 import com.example.a2.databinding.FragmentArtListBinding
 import com.example.a2.fragments.ArtSearchFragment.Companion.ART_DATA
 import com.example.a2.fragments.ArtSearchFragment.Companion.ART_KEY_FOR_FRAGMENT
@@ -67,7 +68,10 @@ class ArtListFragment : Fragment() {
             }
         })
         artListViewModel.errorLiveData.observe(viewLifecycleOwner){ error->
-            Toast.makeText(context, R.string.errorMessageInList, Toast.LENGTH_SHORT).show()
+            when(error){
+                is AppError.NoInternetError -> Toast.makeText(context, R.string.errorMessageInList, Toast.LENGTH_SHORT).show()
+                is AppError.PartialDataError -> Toast.makeText(context, R.string.partialDataError, Toast.LENGTH_SHORT).show()
+            }
         }
 
         bindingArtList.rvForArtItem.adapter = artAdapter
@@ -75,7 +79,5 @@ class ArtListFragment : Fragment() {
             artAdapter.submitList(artworks)
         }
         bindingArtList.rvForArtItem.layoutManager = LinearLayoutManager(context)
-
-        artListViewModel.loadArtworks()
     }
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.a2.data.ArtworkEntity
 import com.example.a2.data.db.AppError
 import com.example.a2.repository.ArtRepository
@@ -14,76 +15,70 @@ import javax.inject.Inject
 @HiltViewModel
 class ArtListViewModel @Inject constructor(
     private val artRepository: ArtRepository<ArtworkEntity>
-): ViewModel() {
+) : ViewModel() {
     private val _artListLiveData = MutableLiveData<List<ArtworkEntity>>()
     val artListLiveData: LiveData<List<ArtworkEntity>> = _artListLiveData
 
     private val _errorLiveData = MutableLiveData<AppError>()
     val errorLiveData: LiveData<AppError> = _errorLiveData
 
-    private var currentPage = 1
-    private var isLoading = false
-    private var isFirstLoadFromCache = true
-
-    init {
-        loadCachedArtworks()
+    companion object {
+        const val PAGE_SIZE = 12
     }
 
-    fun loadArtworks(page: Int = 1) = viewModelScope.launch {
+    private var currentPage = 1
+    private var isLoading = false
+    private var isFirstLaunch = true
 
-        if(isLoading) {
-            return@launch
+    init {
+        viewModelScope.launch {
+            loadCachedArtworks()
+            loadArtworks()
+        }
+    }
+
+    private suspend fun loadArtworks(page: Int = currentPage) {
+
+        if (isLoading) {
+            return
         }
         isLoading = true
 
         try {
-            if (isFirstLoadFromCache){
-                val cachedArtworks = artRepository.getCachedArtworks()
-                if (cachedArtworks.isNotEmpty()){
-                    _artListLiveData.value = cachedArtworks
-                    currentPage = calculateLastPage(cachedArtworks.size)
-                    isFirstLoadFromCache = false
-                } else{
-                    isFirstLoadFromCache = false
-                }
-            }
 
             val newArtworks = artRepository.getAllArtworks(page)
-            saveArtworksToDatabase(newArtworks)
+            artRepository.insertAllArtworks(newArtworks)
 
             val currentList = _artListLiveData.value.orEmpty()
             _artListLiveData.value = currentList + newArtworks
 
+            isFirstLaunch = false
 
-        }catch (e: Exception){
-            if (artRepository.getCachedArtworks().isEmpty()){
+        } catch (e: Exception) {
+            val cachedArtworks = artRepository.getCachedArtworks()
+            if (cachedArtworks.isEmpty()) {
                 _errorLiveData.value = AppError.NoInternetError
+            } else {
+                _errorLiveData.value = AppError.PartialDataError
             }
         } finally {
             isLoading = false
         }
     }
 
-    fun onPageFinished(){
-        if (!isFirstLoadFromCache){
-            loadArtworks(++currentPage)
+    fun onPageFinished() {
+        if (!isFirstLaunch) {
+            viewModelScope.launch {
+                loadArtworks(++currentPage)
+            }
         }
     }
 
-    private fun loadCachedArtworks() = viewModelScope.launch{
+    private suspend fun loadCachedArtworks() {
         val cachedArtworks = artRepository.getCachedArtworks()
-        if (cachedArtworks.isNotEmpty()){
+        if (cachedArtworks.isNotEmpty()) {
             _artListLiveData.value = cachedArtworks
-            currentPage = calculateLastPage(cachedArtworks.size)
+            currentPage = cachedArtworks.size / PAGE_SIZE
         }
-    }
-
-    private fun calculateLastPage(itemCount: Int): Int{
-        val itemsPage = 12
-        return (itemCount / itemsPage) + if (itemCount % itemsPage == 0) 0 else 1
-    }
-
-    private suspend fun saveArtworksToDatabase(artworks: List<ArtworkEntity>){
-        artRepository.insertAllArtworks(artworks)
     }
 }
