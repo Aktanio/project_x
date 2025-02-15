@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a2.R
 import com.example.a2.adapter.CountryAdapter
 import com.example.a2.data.CountryEntity
+import com.example.a2.data.db.AppError
 import com.example.a2.databinding.FragmentCountriesListBinding
 import com.example.a2.fragments.CountriesSearchFragment.Companion.COUNTRY_DATA
 import com.example.a2.fragments.CountriesSearchFragment.Companion.KEY_FOR_FRAGMENT
@@ -59,8 +60,11 @@ class CountriesListFragment : Fragment() {
         }
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                listCountryViewModel.errorSharedFlow.collect{
-                    Toast.makeText(context, R.string.errorMessageInList, Toast.LENGTH_SHORT).show()
+                listCountryViewModel.errorSharedFlow.collect{ error->
+                    when(error){
+                        is AppError.NoDataError -> Toast.makeText(context, R.string.errorMessageInList, Toast.LENGTH_SHORT).show()
+                        is AppError.PartialDataError -> Toast.makeText(context, R.string.partialDataError, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

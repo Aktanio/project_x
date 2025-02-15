@@ -36,11 +36,10 @@ class CountryListViewModel @Inject constructor(
                 _countriesListLiveData.value = countryRepository.getCachedCountries()
             }
         }catch (e: Exception){
-            val cachedCountries = countryRepository.getCachedCountries()
-            if (cachedCountries.isNotEmpty()){
-                _countriesListLiveData.value = cachedCountries
+            if (countryRepository.getCachedCountries().isEmpty()){
+                _errorSharedFlow.emit(AppError.NoDataError)
             }else{
-                _errorSharedFlow.emit(AppError.NoInternetError)
+                _errorSharedFlow.emit(AppError.PartialDataError)
             }
         }
     }

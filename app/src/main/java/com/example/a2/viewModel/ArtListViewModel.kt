@@ -33,7 +33,9 @@ class ArtListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             loadCachedArtworks()
-            loadArtworks()
+            if (_artListLiveData.value.isNullOrEmpty()){
+                loadArtworks()
+            }
         }
     }
 
@@ -55,9 +57,8 @@ class ArtListViewModel @Inject constructor(
             isFirstLaunch = false
 
         } catch (e: Exception) {
-            val cachedArtworks = artRepository.getCachedArtworks()
-            if (cachedArtworks.isEmpty()) {
-                _errorLiveData.value = AppError.NoInternetError
+            if (_artListLiveData.value.orEmpty().isEmpty()) {
+                _errorLiveData.value = AppError.NoDataError
             } else {
                 _errorLiveData.value = AppError.PartialDataError
             }
@@ -78,7 +79,8 @@ class ArtListViewModel @Inject constructor(
         val cachedArtworks = artRepository.getCachedArtworks()
         if (cachedArtworks.isNotEmpty()) {
             _artListLiveData.value = cachedArtworks
-            currentPage = cachedArtworks.size / PAGE_SIZE
+            currentPage = (cachedArtworks.size / PAGE_SIZE) + 1
+            isFirstLaunch = false
         }
     }
 }

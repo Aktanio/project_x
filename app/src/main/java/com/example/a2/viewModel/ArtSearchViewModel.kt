@@ -28,7 +28,7 @@ class ArtSearchViewModel @Inject constructor(
             val jsonInfoArt = Json.encodeToString(ArtworkEntity.serializer(), art)
             _artInfoSharedFlow.emit(jsonInfoArt)
         }catch (e: Exception){
-            _errorSharedFlow.emit(AppError.NoInternetError)
+            _errorSharedFlow.emit(AppError.NoDataError)
         }
     }
 }

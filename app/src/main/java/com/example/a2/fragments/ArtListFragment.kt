@@ -69,7 +69,7 @@ class ArtListFragment : Fragment() {
         })
         artListViewModel.errorLiveData.observe(viewLifecycleOwner){ error->
             when(error){
-                is AppError.NoInternetError -> Toast.makeText(context, R.string.errorMessageInList, Toast.LENGTH_SHORT).show()
+                is AppError.NoDataError -> Toast.makeText(context, R.string.errorMessageInList, Toast.LENGTH_SHORT).show()
                 is AppError.PartialDataError -> Toast.makeText(context, R.string.partialDataError, Toast.LENGTH_SHORT).show()
             }
         }

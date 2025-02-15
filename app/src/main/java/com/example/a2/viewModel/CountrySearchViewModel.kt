@@ -28,7 +28,7 @@ class CountrySearchViewModel @Inject constructor(
             val jsonInfoCountry = Json.encodeToString(CountryEntity.serializer(), country)
             _countryInfoSharedFlow.emit(jsonInfoCountry)
         }catch (e: Exception){
-            _errorSharedFlow.emit(AppError.NoInternetError)
+            _errorSharedFlow.emit(AppError.NoDataError)
         }
     }
 }
