@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.a2.data.ArtworkEntity
 import com.example.a2.data.db.AppError
+import com.example.a2.data.db.NetworkUtils
 import com.example.a2.repository.ArtRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ArtListViewModel @Inject constructor(
-    private val artRepository: ArtRepository<ArtworkEntity>
+    private val artRepository: ArtRepository<ArtworkEntity>,
+    private val networkUtils: NetworkUtils
 ) : ViewModel() {
     private val _artListLiveData = MutableLiveData<List<ArtworkEntity>>()
     val artListLiveData: LiveData<List<ArtworkEntity>> = _artListLiveData
@@ -59,8 +60,6 @@ class ArtListViewModel @Inject constructor(
         } catch (e: Exception) {
             if (_artListLiveData.value.orEmpty().isEmpty()) {
                 _errorLiveData.value = AppError.NoDataError
-            } else {
-                _errorLiveData.value = AppError.PartialDataError
             }
         } finally {
             isLoading = false
@@ -81,6 +80,9 @@ class ArtListViewModel @Inject constructor(
             _artListLiveData.value = cachedArtworks
             currentPage = (cachedArtworks.size / PAGE_SIZE) + 1
             isFirstLaunch = false
+        }
+        if (!networkUtils.isNetworkAvailable() && cachedArtworks.isNotEmpty()) {
+            _errorLiveData.value = AppError.PartialDataError
         }
     }
 }
