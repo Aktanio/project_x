@@ -26,21 +26,25 @@ class CountryListViewModel @Inject constructor(
     fun requestAllCountries() = viewModelScope.launch{
 
         try {
-            if (countryRepository.getCachedCountries().isNotEmpty()){
-                _countriesListLiveData.value = countryRepository.getCachedCountries()
+            val cachedCountries = loadCachedCountries()
+            if (cachedCountries.isNotEmpty()){
+                _countriesListLiveData.value = cachedCountries
             }else{
                 val apiCountries = countryRepository.getAllCountries()
 
                 countryRepository.insertAllCountries(apiCountries)
 
-                _countriesListLiveData.value = countryRepository.getCachedCountries()
+                _countriesListLiveData.value = loadCachedCountries()
             }
         }catch (e: Exception){
-            if (countryRepository.getCachedCountries().isEmpty()){
+            if (loadCachedCountries().isEmpty()){
                 _errorSharedFlow.emit(AppError.NoDataError)
             }else{
                 _errorSharedFlow.emit(AppError.PartialDataError)
             }
         }
+    }
+    private suspend fun loadCachedCountries() : List<CountryEntity> {
+        return countryRepository.getCachedCountries()
     }
 }
