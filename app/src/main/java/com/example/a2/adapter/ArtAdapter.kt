@@ -7,25 +7,25 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.a2.R
-import com.example.a2.data.ArtworksResponse
+import com.example.a2.data.ArtworkEntity
 import com.example.a2.databinding.ItemForOneArtBinding
 import com.example.a2.di.RetrofitModule.BASE_URL_FOR_IMAGE
 import com.example.a2.di.RetrofitModule.IMAGE_SIZE
 
-class ArtAdapter(private val itemClick: (ArtworksResponse.Artwork)-> Unit):
-    ListAdapter<ArtworksResponse.Artwork, ArtAdapter.ViewHolder>(ArtDiffCallback) {
+class ArtAdapter(private val itemClick: (ArtworkEntity)-> Unit):
+    ListAdapter<ArtworkEntity, ArtAdapter.ViewHolder>(ArtDiffCallback) {
 
-    object ArtDiffCallback: DiffUtil.ItemCallback<ArtworksResponse.Artwork>() {
+    object ArtDiffCallback: DiffUtil.ItemCallback<ArtworkEntity>() {
         override fun areItemsTheSame(
-            oldItem: ArtworksResponse.Artwork,
-            newItem: ArtworksResponse.Artwork
+            oldItem: ArtworkEntity,
+            newItem: ArtworkEntity
         ): Boolean {
-            return oldItem.image_id == newItem.image_id
+            return oldItem.titleArt == newItem.titleArt
         }
 
         override fun areContentsTheSame(
-            oldItem: ArtworksResponse.Artwork,
-            newItem: ArtworksResponse.Artwork
+            oldItem: ArtworkEntity,
+            newItem: ArtworkEntity
         ): Boolean {
             return oldItem == newItem
         }
@@ -33,9 +33,9 @@ class ArtAdapter(private val itemClick: (ArtworksResponse.Artwork)-> Unit):
     }
 
     inner class ViewHolder(private val bindingItem: ItemForOneArtBinding): RecyclerView.ViewHolder(bindingItem.root){
-        fun bind(art: ArtworksResponse.Artwork) = with(bindingItem){
-            tvNameArt.text = art.title
-            val urlImage = "$BASE_URL_FOR_IMAGE${art.image_id}$IMAGE_SIZE"
+        fun bind(art: ArtworkEntity) = with(bindingItem){
+            tvNameArt.text = art.titleArt
+            val urlImage = "$BASE_URL_FOR_IMAGE${art.imageArt_id}$IMAGE_SIZE"
             Glide.with(ivOneArt)
                 .load(urlImage)
                 .placeholder(R.drawable.default_image)

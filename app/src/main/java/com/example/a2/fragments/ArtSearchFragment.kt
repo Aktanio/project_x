@@ -53,6 +53,14 @@ class ArtSearchFragment : Fragment() {
             }
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                artSearchViewModel.errorSharedFlow.collect{ error->
+                    Toast.makeText(context, R.string.errorMessage, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
 
         bindingArtSearch.backToMainFragment.setOnClickListener {
             parentFragmentManager.popBackStack()

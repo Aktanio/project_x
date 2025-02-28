@@ -4,17 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.a2.R
 import com.example.a2.adapter.CountryAdapter
-import com.example.a2.data.CountryResponse
+import com.example.a2.data.CountryEntity
+import com.example.a2.data.db.AppError
 import com.example.a2.databinding.FragmentCountriesListBinding
 import com.example.a2.fragments.CountriesSearchFragment.Companion.COUNTRY_DATA
 import com.example.a2.fragments.CountriesSearchFragment.Companion.KEY_FOR_FRAGMENT
 import com.example.a2.viewModel.CountryListViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 
 @AndroidEntryPoint
@@ -23,7 +29,7 @@ class CountriesListFragment : Fragment() {
     private val listCountryViewModel: CountryListViewModel by viewModels()
     private val countryAdapter by lazy {
         CountryAdapter{selectedMeal->
-            val jsonInfoCountry = Json.encodeToString(CountryResponse.serializer(),selectedMeal)
+            val jsonInfoCountry = Json.encodeToString(CountryEntity.serializer(),selectedMeal)
             val selectedCountryBundle = Bundle().apply {
                 putString(COUNTRY_DATA, jsonInfoCountry)
             }
@@ -51,6 +57,16 @@ class CountriesListFragment : Fragment() {
         bindingFragmentList.forAllCountry.adapter = countryAdapter
         listCountryViewModel.countriesLiveData.observe(viewLifecycleOwner){countryResponse->
             countryAdapter.submitList(countryResponse)
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                listCountryViewModel.errorSharedFlow.collect{ error->
+                    when(error){
+                        is AppError.NoDataError -> Toast.makeText(context, R.string.errorMessageInList, Toast.LENGTH_SHORT).show()
+                        is AppError.PartialDataError -> Toast.makeText(context, R.string.partialDataError, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
         bindingFragmentList.forAllCountry.layoutManager = LinearLayoutManager(context)
         listCountryViewModel.requestAllCountries()

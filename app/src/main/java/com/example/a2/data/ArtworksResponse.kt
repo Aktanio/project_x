@@ -8,6 +8,7 @@ data class ArtworksResponse(
 ){
     @Serializable
     data class Artwork(
+        val id: Int,
         val title: String,
         val image_id: String?,
         val artist_display: String?,

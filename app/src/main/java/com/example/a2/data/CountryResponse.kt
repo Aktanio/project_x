@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CountryResponse(
+    val id: Int,
     val name: Name,
     val capital: List<String>?,
     val flags: Flags,
