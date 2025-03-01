@@ -5,8 +5,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.a2.databinding.ActivityMainBinding
-import com.example.a2.fragments.MainFragment
-import com.example.a2.viewModel.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 

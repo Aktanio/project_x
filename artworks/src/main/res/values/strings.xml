@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="art_search_button">Поиск картины</string>
+    <string name="name_art">Название картины:</string>
+    <string name="title_of_the_art">TextView</string>
+    <string name="about_creator">О художнике:</string>
+    <string name="creator">TextView</string>
+    <string name="style_title">Стиль картины:</string>
+    <string name="style">TextView</string>
+    <string name="title">TextView</string>
+    <string name="year_the_painting">Год создания картины:</string>
+    <string name="name_for_search">Название</string>
+    <string name="errorMessage">Нет подключение к интернету. Проверьте соединение.</string>
+    <string name="errorMessageInList">Для загрузки подключитесь к интернету.</string>
+    <string name="partialDataError">Отсутствует интернет соединение.</string>
+</resources>

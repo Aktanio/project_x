@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Курс2"
 include(":app")
- 
+include(":artworks")
+include(":countries")

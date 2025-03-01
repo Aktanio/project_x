@@ -43,6 +43,9 @@ android {
 
 dependencies {
 
+    implementation(project(":artworks"))
+    implementation(project(":countries"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
