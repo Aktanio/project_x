@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.artworks.db.ArtworksDao
-import com.example.countries.db.CountriesDao
+import com.example.artworks.data.local.model.ArtworkDBEntity
+import com.example.artworks.data.local.ArtworksDao
+import com.example.countries.data.local.CountriesDao
+import com.example.countries.data.local.model.CountryDBEntity
 
-@Database(entities = [com.example.artworks.db.ArtworkDBEntity::class, com.example.countries.db.CountryDBEntity::class], version = 3)
+@Database(entities = [ArtworkDBEntity::class, CountryDBEntity::class], version = 3)
 abstract class AppDatabase: RoomDatabase() {
 
     abstract fun getArtworksDao(): ArtworksDao

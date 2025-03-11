@@ -2,8 +2,8 @@ package com.example.a2.di
 
 import android.content.Context
 import com.example.a2.db.AppDatabase
-import com.example.artworks.db.ArtworksDao
-import com.example.countries.db.CountriesDao
+import com.example.artworks.data.local.ArtworksDao
+import com.example.countries.data.local.CountriesDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

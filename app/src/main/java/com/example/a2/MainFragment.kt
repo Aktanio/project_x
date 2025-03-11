@@ -6,6 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.a2.databinding.FragmentMainBinding
+import com.example.artworks.presentation.ui.ArtListFragment
+import com.example.artworks.presentation.ui.ArtSearchFragment
+import com.example.countries.presentation.ui.CountriesListFragment
+import com.example.countries.presentation.ui.CountriesSearchFragment
 
 class MainFragment : Fragment() {
     private lateinit var bindingFragment: FragmentMainBinding
@@ -20,16 +24,16 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         bindingFragment.searchCountry.setOnClickListener {
-            openChildFragment(com.example.countries.ui.CountriesSearchFragment())
+            openChildFragment(CountriesSearchFragment())
         }
         bindingFragment.listCountry.setOnClickListener {
-            openChildFragment(com.example.countries.ui.CountriesListFragment())
+            openChildFragment(CountriesListFragment())
         }
         bindingFragment.artSearchButton.setOnClickListener {
-            openChildFragment(com.example.artworks.ui.ArtSearchFragment())
+            openChildFragment(ArtSearchFragment())
         }
         bindingFragment.artListButton.setOnClickListener {
-            openChildFragment(com.example.artworks.ui.ArtListFragment())
+            openChildFragment(ArtListFragment())
         }
     }
     private fun openChildFragment(childFragment: Fragment){

@@ -1,6 +1,7 @@
 package com.example.a2
 
 import androidx.room.TypeConverter
+import com.example.countries.data.api.model.CountryResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -32,13 +33,13 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromNativeName(map: Map<String, com.example.countries.data.CountryResponse.NativeName>?): String?{
+    fun fromNativeName(map: Map<String, CountryResponse.NativeName>?): String?{
         return gson.toJson(map)
     }
 
     @TypeConverter
-    fun toNativeName(data: String?): Map<String, com.example.countries.data.CountryResponse.NativeName>?{
-        val type = object : TypeToken<Map<String, com.example.countries.data.CountryResponse.NativeName>>() {}.type
+    fun toNativeName(data: String?): Map<String, CountryResponse.NativeName>?{
+        val type = object : TypeToken<Map<String, CountryResponse.NativeName>>() {}.type
         return gson.fromJson(data, type)
     }
 }
