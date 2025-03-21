@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.a2.databinding.FragmentMainBinding
-import com.example.artworks.presentation.ui.ArtListFragment
-import com.example.artworks.presentation.ui.ArtSearchFragment
-import com.example.countries.presentation.ui.CountriesListFragment
-import com.example.countries.presentation.ui.CountriesSearchFragment
+import com.example.artworks.presentation.ui.fragment.ArtListFragment
+import com.example.artworks.presentation.ui.fragment.ArtSearchFragment
+import com.example.countries.presentation.ui.fragment.CountriesListFragment
+import com.example.countries.presentation.ui.fragment.CountriesSearchFragment
 
 class MainFragment : Fragment() {
     private lateinit var bindingFragment: FragmentMainBinding

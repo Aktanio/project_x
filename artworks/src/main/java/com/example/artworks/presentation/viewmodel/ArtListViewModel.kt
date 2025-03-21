@@ -4,12 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.artworks.domain.entity.ArtworkEntity
-import com.example.artworks.AppError
-import com.example.artworks.NetworksUtils
-import com.example.artworks.domain.usecase.GetAllArtworksUseCase
-import com.example.artworks.domain.usecase.GetCachedArtworksUseCase
-import com.example.artworks.domain.usecase.SaveAllArtUseCase
+import com.example.artworks.data.mapper.ArtworkMapper.toArtworksPresentationDto
+import com.example.artworks.presentation.error.AppError
+import com.example.artworks.domain.utils.NetworkChecker
+import com.example.artworks.domain.usecase.contract.GetAllArtworksUseCase
+import com.example.artworks.domain.usecase.contract.GetCachedArtworksUseCase
+import com.example.artworks.domain.usecase.contract.SaveAllArtUseCase
+import com.example.artworks.presentation.dto.ArtworksPresentationDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,10 +20,10 @@ class ArtListViewModel @Inject constructor(
     private val getAllArtworksUseCase: GetAllArtworksUseCase,
     private val saveAllArtUseCase: SaveAllArtUseCase,
     private val getCachedArtworksUseCase: GetCachedArtworksUseCase,
-    private val networkUtils: NetworksUtils
+    private val networkChecker: NetworkChecker
 ) : ViewModel() {
-    private val _artListLiveData = MutableLiveData<List<ArtworkEntity>>()
-    val artListLiveData: LiveData<List<ArtworkEntity>> = _artListLiveData
+    private val _artListLiveData = MutableLiveData<List<ArtworksPresentationDto>>()
+    val artListLiveData: LiveData<List<ArtworksPresentationDto>> = _artListLiveData
 
     private val _errorLiveData = MutableLiveData<AppError>()
     val errorLiveData: LiveData<AppError> = _errorLiveData
@@ -57,7 +58,7 @@ class ArtListViewModel @Inject constructor(
             saveAllArtUseCase.invoke(newArtworks)
 
             val currentList = _artListLiveData.value.orEmpty()
-            _artListLiveData.value = currentList + newArtworks
+            _artListLiveData.value = currentList + newArtworks.map { it.toArtworksPresentationDto() }
 
             isFirstLaunch = false
 
@@ -81,11 +82,11 @@ class ArtListViewModel @Inject constructor(
     private suspend fun loadCachedArtworks() {
         val cachedArtworks = getCachedArtworksUseCase.invoke()
         if (cachedArtworks.isNotEmpty()) {
-            _artListLiveData.value = cachedArtworks
+            _artListLiveData.value = cachedArtworks.map { it.toArtworksPresentationDto() }
             currentPage = (cachedArtworks.size / PAGE_SIZE) + 1
             isFirstLaunch = false
         }
-        if (!networkUtils.isNetworkAvailable() && cachedArtworks.isNotEmpty()) {
+        if (cachedArtworks.isNotEmpty() && !networkChecker.isNetworkAvailable()) {
             _errorLiveData.value = AppError.PartialDataError
         }
     }

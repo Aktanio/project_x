@@ -2,19 +2,19 @@ package com.example.artworks.data.repository
 
 import com.example.artworks.data.api.ArtworksAPI
 import com.example.artworks.data.local.ArtworksDao
-import com.example.artworks.domain.repository.ArtRepository
+import com.example.artworks.data.mapper.ArtworkMapper.toArtworkDBList
+import com.example.artworks.data.mapper.ArtworkMapper.toArtworkEntity
+import com.example.artworks.data.mapper.ArtworkMapper.toArtworkEntityDatabaseList
+import com.example.artworks.data.mapper.ArtworkMapper.toArtworkEntityResponseList
 import com.example.artworks.domain.entity.ArtworkEntity
-import com.example.artworks.domain.entity.toArtworkDBList
-import com.example.artworks.domain.entity.toArtworkEntity
-import com.example.artworks.domain.entity.toArtworkEntityDatabaseList
-import com.example.artworks.domain.entity.toArtworkEntityResponseList
+import com.example.artworks.domain.repository.ArtRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ArtRepositoryImpl @Inject constructor(
     private val artworksAPI: ArtworksAPI,
-    private val artworksDao: ArtworksDao
+    private val artworksDao: ArtworksDao,
 ): ArtRepository<ArtworkEntity> {
     override suspend fun getAllArtworks(page: Int): List<ArtworkEntity> {
         return withContext(Dispatchers.IO){

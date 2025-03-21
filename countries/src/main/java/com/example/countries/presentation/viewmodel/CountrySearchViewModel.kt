@@ -2,10 +2,10 @@ package com.example.countries.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.countries.domain.entity.CountryEntity
-import com.example.countries.AppError
-import com.example.countries.domain.repository.CountryRepository
-import com.example.countries.domain.usecase.GetCountryByNameUseCase
+import com.example.countries.data.mapper.CountriesMapper.toCountryPresentationDto
+import com.example.countries.presentation.error.AppError
+import com.example.countries.domain.usecase.contract.GetCountryByNameUseCase
+import com.example.countries.presentation.dto.CountryPresentationDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -26,7 +26,7 @@ class CountrySearchViewModel @Inject constructor(
     fun onSearchButtonClicked(countryName: String) = viewModelScope.launch {
         try {
             val country = getCountryByNameUseCase.invoke(countryName)
-            val jsonInfoCountry = Json.encodeToString(CountryEntity.serializer(), country)
+            val jsonInfoCountry = Json.encodeToString(CountryPresentationDto.serializer(), country.toCountryPresentationDto())
             _countryInfoSharedFlow.emit(jsonInfoCountry)
         }catch (e: Exception){
             _errorSharedFlow.emit(AppError.NoDataError)

@@ -2,11 +2,11 @@ package com.example.countries.data.repository
 
 import com.example.countries.data.api.CountriesAPI
 import com.example.countries.data.local.CountriesDao
+import com.example.countries.data.mapper.CountriesMapper.toCountryDBList
+import com.example.countries.data.mapper.CountriesMapper.toCountryEntity
+import com.example.countries.data.mapper.CountriesMapper.toCountryEntityDatabaseList
+import com.example.countries.data.mapper.CountriesMapper.toCountryEntityResponseList
 import com.example.countries.domain.entity.CountryEntity
-import com.example.countries.domain.entity.toCountryDBList
-import com.example.countries.domain.entity.toCountryEntity
-import com.example.countries.domain.entity.toCountryEntityDatabaseList
-import com.example.countries.domain.entity.toCountryEntityResponseList
 import com.example.countries.domain.repository.CountryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

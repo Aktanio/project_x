@@ -1,7 +1,9 @@
-package com.example.artworks.domain.entity
+package com.example.artworks.presentation.dto
 
+import kotlinx.serialization.Serializable
 
-data class ArtworkEntity(
+@Serializable
+data class ArtworksPresentationDto(
     val id: Int,
     val titleArt: String,
     val imageArtId: String?,
@@ -9,4 +11,3 @@ data class ArtworkEntity(
     val dateArtDisplay: String?,
     val styleArtTitle: String?
 )
-

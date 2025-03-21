@@ -1,7 +1,9 @@
-package com.example.countries.domain.entity
+package com.example.countries.presentation.dto
 
+import kotlinx.serialization.Serializable
 
-data class CountryEntity(
+@Serializable
+data class CountryPresentationDto(
     val id: Int,
     val commonName: String,
     val officialName: String,
