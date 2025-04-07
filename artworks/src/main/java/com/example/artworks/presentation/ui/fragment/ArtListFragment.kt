@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.artworks.presentation.error.AppError
+import com.example.common.utils.AppError
 import com.example.artworks.presentation.dto.ArtworksPresentationDto
 import com.example.artworks.presentation.ui.adapter.ArtAdapter
 import com.example.artworks.presentation.ui.fragment.ArtSearchFragment.Companion.ART_DATA

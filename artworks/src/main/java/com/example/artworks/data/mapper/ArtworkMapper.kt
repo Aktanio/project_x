@@ -3,27 +3,8 @@ package com.example.artworks.data.mapper
 import com.example.artworks.data.api.model.ArtworksResponse
 import com.example.artworks.data.local.model.ArtworkDBEntity
 import com.example.artworks.domain.entity.ArtworkEntity
-import com.example.artworks.presentation.dto.ArtworksPresentationDto
 
 object ArtworkMapper {
-
-    fun ArtworkEntity.toArtworksPresentationDto() = ArtworksPresentationDto(
-        imageArtId = this.imageArtId,
-        id = this.id,
-        titleArt = this.titleArt,
-        artistArtDisplay = this.artistArtDisplay,
-        dateArtDisplay = this.dateArtDisplay,
-        styleArtTitle = this.styleArtTitle
-    )
-
-    fun ArtworksPresentationDto.toArtworkEntity() = ArtworkEntity(
-        imageArtId = this.imageArtId,
-        id = this.id,
-        titleArt = this.titleArt,
-        artistArtDisplay = this.artistArtDisplay,
-        dateArtDisplay = this.dateArtDisplay,
-        styleArtTitle = this.styleArtTitle
-    )
 
     fun ArtworksResponse.Artwork.toArtworkEntity() = ArtworkEntity(
         imageArtId = this.image_id,

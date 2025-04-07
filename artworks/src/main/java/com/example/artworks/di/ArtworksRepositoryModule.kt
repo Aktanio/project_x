@@ -1,8 +1,8 @@
 package com.example.artworks.di
 
 import com.example.artworks.data.repository.ArtRepositoryImpl
-import com.example.artworks.domain.repository.ArtRepository
 import com.example.artworks.domain.entity.ArtworkEntity
+import com.example.artworks.domain.repository.ArtRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

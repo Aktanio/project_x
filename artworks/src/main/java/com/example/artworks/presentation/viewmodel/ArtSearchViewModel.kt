@@ -2,10 +2,10 @@ package com.example.artworks.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.artworks.data.mapper.ArtworkMapper.toArtworksPresentationDto
-import com.example.artworks.presentation.error.AppError
+import com.example.common.utils.AppError
 import com.example.artworks.domain.usecase.contract.GetArtByNameUseCase
 import com.example.artworks.presentation.dto.ArtworksPresentationDto
+import com.example.artworks.presentation.dto.mapper.ArtworkPresentationDtoMapper.toArtworksPresentationDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

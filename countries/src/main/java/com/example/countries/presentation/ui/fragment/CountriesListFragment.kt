@@ -11,11 +11,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.common.utils.AppError
 import com.example.countries.R
 import com.example.countries.databinding.FragmentCountriesListBinding
-import com.example.countries.presentation.error.AppError
-import com.example.countries.presentation.ui.adapter.CountryAdapter
 import com.example.countries.presentation.dto.CountryPresentationDto
+import com.example.countries.presentation.ui.adapter.CountryAdapter
 import com.example.countries.presentation.ui.fragment.CountriesSearchFragment.Companion.COUNTRY_DATA
 import com.example.countries.presentation.ui.fragment.CountriesSearchFragment.Companion.KEY_FOR_FRAGMENT
 import com.example.countries.presentation.viewmodel.CountryListViewModel

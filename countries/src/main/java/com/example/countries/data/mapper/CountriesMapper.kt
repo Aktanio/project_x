@@ -3,45 +3,8 @@ package com.example.countries.data.mapper
 import com.example.countries.data.api.model.CountryResponse
 import com.example.countries.data.local.model.CountryDBEntity
 import com.example.countries.domain.entity.CountryEntity
-import com.example.countries.presentation.dto.CountryPresentationDto
 
 object CountriesMapper {
-
-    fun CountryEntity.toCountryPresentationDto() = CountryPresentationDto(
-        id = this.id,
-        commonName = this.commonName,
-        officialName = this.officialName,
-        nativeName = this.nativeName,
-        capital = this.capital,
-        flagsPng = this.flagsPng,
-        region = this.region,
-        population = this.population,
-        area = this.area,
-        continents = this.continents,
-        languages = this.languages,
-        subregion = this.subregion,
-        currencies = this.currencies,
-        carSigns = this.carSigns,
-        carSide = this.carSide
-    )
-
-    fun CountryPresentationDto.toCountryEntity() = CountryEntity(
-        id = this.id,
-        commonName = this.commonName,
-        officialName = this.officialName,
-        nativeName = this.nativeName,
-        capital = this.capital,
-        flagsPng = this.flagsPng,
-        region = this.region,
-        population = this.population,
-        area = this.area,
-        continents = this.continents,
-        languages = this.languages,
-        subregion = this.subregion,
-        currencies = this.currencies,
-        carSigns = this.carSigns,
-        carSide = this.carSide
-    )
 
     fun CountryResponse.toCountryEntity() = CountryEntity(
         id = this.id,

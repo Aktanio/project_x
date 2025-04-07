@@ -4,12 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.countries.data.mapper.CountriesMapper.toCountryPresentationDto
-import com.example.countries.presentation.error.AppError
-import com.example.countries.domain.usecase.contract.GetAllCountriesUseCase
+import com.example.common.utils.AppError
 import com.example.countries.domain.usecase.contract.GetCachedCountriesUseCase
-import com.example.countries.domain.usecase.contract.SaveAllCountriesUseCase
+import com.example.countries.domain.usecase.contract.SaveAndGetAllCountriesUseCase
 import com.example.countries.presentation.dto.CountryPresentationDto
+import com.example.countries.presentation.dto.mapper.CountryPresentationDtoMapper.toCountryPresentationDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -18,8 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CountryListViewModel @Inject constructor(
-    private val getAllCountriesUseCase: GetAllCountriesUseCase,
-    private val saveAllCountriesUseCase: SaveAllCountriesUseCase,
+    private val saveAndGetAllCountriesUseCase: SaveAndGetAllCountriesUseCase,
     private val getCachedCountriesUseCase: GetCachedCountriesUseCase
 ): ViewModel() {
     private val _countriesListLiveData = MutableLiveData<List<CountryPresentationDto>>()
@@ -35,9 +33,7 @@ class CountryListViewModel @Inject constructor(
             if (cachedCountries.isNotEmpty()){
                 _countriesListLiveData.value = cachedCountries
             }else{
-                val apiCountries = getAllCountriesUseCase.invoke()
-
-                saveAllCountriesUseCase.invoke(apiCountries)
+                saveAndGetAllCountriesUseCase.invoke()
 
                 _countriesListLiveData.value = loadCachedCountries()
             }

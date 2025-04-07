@@ -6,12 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.a2.databinding.FragmentMainBinding
-import com.example.artworks.presentation.ui.fragment.ArtListFragment
-import com.example.artworks.presentation.ui.fragment.ArtSearchFragment
-import com.example.countries.presentation.ui.fragment.CountriesListFragment
-import com.example.countries.presentation.ui.fragment.CountriesSearchFragment
+import com.example.artworks_api.contract.ArtworksNavigator
+import com.example.countries_api.contract.CountriesNavigator
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
+
+    @Inject lateinit var artworksNavigator: ArtworksNavigator
+    @Inject lateinit var countriesNavigator: CountriesNavigator
+
     private lateinit var bindingFragment: FragmentMainBinding
 
     override fun onCreateView(
@@ -23,17 +28,18 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         bindingFragment.searchCountry.setOnClickListener {
-            openChildFragment(CountriesSearchFragment())
+            openChildFragment(countriesNavigator.openCountrySearchFragment())
         }
         bindingFragment.listCountry.setOnClickListener {
-            openChildFragment(CountriesListFragment())
+            openChildFragment(countriesNavigator.openCountryListFragment())
         }
         bindingFragment.artSearchButton.setOnClickListener {
-            openChildFragment(ArtSearchFragment())
+            openChildFragment(artworksNavigator.openArtSearchFragment())
         }
         bindingFragment.artListButton.setOnClickListener {
-            openChildFragment(ArtListFragment())
+            openChildFragment(artworksNavigator.openArtListFragment())
         }
     }
     private fun openChildFragment(childFragment: Fragment){

@@ -23,3 +23,6 @@ rootProject.name = "Курс2"
 include(":app")
 include(":artworks")
 include(":countries")
+include(":artworks_api")
+include(":countries_api")
+include(":common")

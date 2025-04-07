@@ -2,10 +2,10 @@ package com.example.countries.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.countries.data.mapper.CountriesMapper.toCountryPresentationDto
-import com.example.countries.presentation.error.AppError
+import com.example.common.utils.AppError
 import com.example.countries.domain.usecase.contract.GetCountryByNameUseCase
 import com.example.countries.presentation.dto.CountryPresentationDto
+import com.example.countries.presentation.dto.mapper.CountryPresentationDtoMapper.toCountryPresentationDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

@@ -41,6 +41,8 @@ android {
 dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.dagger)
+    implementation(project(":countries_api"))
+    implementation(project(":common"))
     kapt(libs.google.dagger.compiler)
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
