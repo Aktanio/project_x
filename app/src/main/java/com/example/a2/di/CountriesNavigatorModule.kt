@@ -1,5 +1,6 @@
 package com.example.a2.di
 
+import com.example.countries.presentation.implementation.CountriesNavigatorImpl
 import com.example.countries_api.contract.CountriesNavigator
 import dagger.Binds
 import dagger.Module
@@ -10,5 +11,5 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 abstract class CountriesNavigatorModule {
     @Binds
-    abstract fun bindCountiesNavigator(countriesNavigatorImpl: com.example.a2.implementation.CountriesNavigatorImpl): CountriesNavigator
+    abstract fun bindCountiesNavigator(countriesNavigatorImpl: CountriesNavigatorImpl): CountriesNavigator
 }

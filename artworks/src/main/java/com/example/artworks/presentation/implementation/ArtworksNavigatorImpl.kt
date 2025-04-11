@@ -1,4 +1,4 @@
-package com.example.a2.implementation
+package com.example.artworks.presentation.implementation
 
 import androidx.fragment.app.Fragment
 import com.example.artworks.presentation.ui.fragment.ArtListFragment
