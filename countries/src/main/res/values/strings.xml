@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_Button">Поиск страны</string>
+    <string name="country">TextView</string>
+    <string name="capital_of_the_country">Столица:</string>
+    <string name="capital_name">TextView</string>
+    <string name="population_of_the_country">Население:</string>
+    <string name="population">TextView</string>
+    <string name="area_of_the_country">Площадь:</string>
+    <string name="language_of_the_country">Языки:</string>
+    <string name="area">TextView</string>
+    <string name="languages">TextView</string>
+    <string name="name_for_search">Название</string>
+    <string name="subregion_of_the_country">Субрегион:</string>
+    <string name="subregion">TextView</string>
+    <string name="currencies_of_the_country">Валюта:</string>
+    <string name="currencies">TextView</string>
+    <string name="name_of_the_country">Название страны:</string>
+    <string name="the_country">TextView</string>
+    <string name="region">Регион:</string>
+    <string name="region_of_the_country">TextView</string>
+    <string name="continents">Континент(ы):</string>
+    <string name="continents_of_the_country">TextView</string>
+    <string name="car">Знаки машин и сторона передвижения:</string>
+    <string name="aboutCars">TextView</string>
+    <string name="official">Официальное название страны:</string>
+    <string name="official_name">TextView</string>
+    <string name="dash"> - </string>
+    <string name="officialNameEng">TextView</string>
+    <string name="comma"> , </string>
+    <string name="side">TextView</string>
+    <string name="squared">км²</string>
+    <string name="errorMessage">Нет подключение к интернету. Проверьте соединение.</string>
+    <string name="errorMessageInList">Для загрузки подключитесь к интернету.</string>
+    <string name="partialDataError">Отсутствует интернет соединение.</string>
+</resources>
